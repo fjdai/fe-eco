@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
 import { createServerRouter } from './router';
 import { store } from './redux/store';
+import { CssBaseline } from '@mui/material';
 
 export function render(url: string) {
   const helmetContext = {};
@@ -12,6 +13,7 @@ export function render(url: string) {
   const html = ReactDOMServer.renderToString(
     <Provider store={store}>
       <HelmetProvider context={helmetContext}>
+        <CssBaseline />
         <RouterProvider router={router} />
       </HelmetProvider>
     </Provider>
