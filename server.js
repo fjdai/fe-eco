@@ -10,6 +10,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === 'production';
 
+const BOTS = [
+  'facebookexternalhit',
+  'Facebot',
+  'LinkedInBot',
+  'Twitterbot',
+  'WhatsApp',
+];
+
+function isBot(userAgent) {
+  if (!userAgent) return false;
+  return BOTS.some(bot => userAgent.toLowerCase().includes(bot.toLowerCase()));
+}
+
 async function createServer() {
   const app = express();
   app.use(compression());
@@ -25,9 +38,24 @@ async function createServer() {
     app.use(sirv('dist/client', { gzip: true }));
   }
 
+  // Cache for bot requests
+  const botCache = new Map();
+  const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
   app.use('*', async (req, res) => {
     try {
       const url = req.originalUrl;
+      const userAgent = req.headers['user-agent'];
+      const isWebCrawler = isBot(userAgent);
+
+      // Check cache for bots
+      if (isWebCrawler) {
+        const cachedResponse = botCache.get(url);
+        if (cachedResponse && (Date.now() - cachedResponse.timestamp) < CACHE_DURATION) {
+          return res.status(200).set({ 'Content-Type': 'text/html' }).end(cachedResponse.html);
+        }
+      }
+
       let template, render;
 
       if (!isProduction) {
@@ -39,13 +67,21 @@ async function createServer() {
         render = (await import('./dist/server/entry-server.js')).render;
       }
 
-      const { html: appHtml, helmetContext } = await render(url);
-      const { helmet } = helmetContext;
-
-      if (!helmet) {
-        console.warn('Helmet context is missing. Ensure you are using Helmet in your React components.');
+      // Increase timeout for bots
+      if (isWebCrawler) {
+        res.setTimeout(30000); // 30 seconds timeout for bots
       }
 
+      const { html: appHtml, helmetContext } = await render(url);
+      
+      // Extract helmet data
+      const { helmet } = helmetContext;
+      
+      if (!helmet) {
+        console.warn('No helmet context found');
+      }
+
+      // Construct head content with meta tags
       const head = helmet ? `
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
@@ -53,9 +89,20 @@ async function createServer() {
         ${helmet.script.toString()}
       ` : '';
 
+      // Insert meta tags and content
       const finalHtml = template
         .replace('<!--app-head-->', head)
         .replace('<!--app-html-->', appHtml);
+
+      // Cache response for bots
+      if (isWebCrawler) {
+        botCache.set(url, {
+          html: finalHtml,
+          timestamp: Date.now()
+        });
+// Log bot access
+        console.log(`Bot access: ${userAgent} - ${url}`);
+      }
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml);
     } catch (e) {
@@ -83,4 +130,4 @@ async function createServer() {
   });
 }
 
-createServer(); 
+createServer();

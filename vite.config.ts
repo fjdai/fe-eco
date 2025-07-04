@@ -10,16 +10,23 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
       },
     },
+    ssrManifest: true,
   },
   ssr: { 
     noExternal: [
-      /^@mui\/.*/, // Thay thế toàn bộ các dòng @mui ở đây bằng regex này
-      /^react-helmet-async$/, // Thêm react-helmet-async vào danh sách noExternal
-      'redux-persist', 
-    ]
+      /^@mui\/.*/,
+      /^react-helmet-async$/,
+      /^react-share$/,
+      /^react-toastify$/,
+    ],
+    target: 'node'
   },
   server: {
-    port: 3001
+    port: 3001,
+    strictPort: true,
+    hmr: {
+      timeout: 5000
+    }
   },
   esbuild: {
     jsxFactory: 'React.createElement',
@@ -32,5 +39,7 @@ export default defineConfig({
       },
     },
   },
-  
+  optimizeDeps: {
+    include: ['react', 'react-dom', '@mui/material', 'react-helmet-async', 'react-share']
+  }
 })
