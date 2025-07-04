@@ -25,7 +25,6 @@ interface VNPayPaymentProps {
 const VNPayPayment: React.FC<VNPayPaymentProps> = ({
   amount,
   orderId,
-  onPaymentSuccess,
   onPaymentError,
 }) => {
   const [selectedBank, setSelectedBank] = useState('');

@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { HelmetProvider } from 'react-helmet-async';
 import 'nprogress/nprogress.css';
 import "./styles/main.scss"
+import "./assets/global.css";
 
 const theme = createTheme({
   palette: {
