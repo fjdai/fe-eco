@@ -216,7 +216,7 @@ const CheckoutPage: React.FC = () => {
         order_id: order.id,
         amount: Math.round(finalTotal),
         description: `Thanh toán đơn hàng ${order.order_number}`,
-        bank_code: 'NCB',
+        bank_code: undefined,
         locale: 'vn'
       });
 
