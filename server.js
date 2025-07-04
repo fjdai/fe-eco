@@ -39,13 +39,18 @@ async function createServer() {
         render = (await import('./dist/server/entry-server.js')).render;
       }
 
-      const { html: appHtml, helmetContext } = await render(url, {});
-      const { helmet } = helmetContext || {};
+      const { html: appHtml, helmetContext } = await render(url);
+      const { helmet } = helmetContext;
+
+      if (!helmet) {
+        console.warn('Helmet context is missing. Ensure you are using Helmet in your React components.');
+      }
 
       const head = helmet ? `
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
         ${helmet.link.toString()}
+        ${helmet.script.toString()}
       ` : '';
 
       const finalHtml = template
