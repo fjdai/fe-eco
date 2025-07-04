@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { MetaTags } from '../../components/MetaTags';
 import {
   Container,
@@ -226,18 +227,21 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
     fetchProduct();
   }, [slug, ssrProduct]);
 
-  const currentUrl = window.location.href;
-  // Ensure full URL for shareImage
-  const shareImage = product?.images?.[0] 
-    ? (product.images[0].startsWith('http') 
-        ? product.images[0] 
-        : `${window.location.origin}${product.images[0]}`)
-    : (product?.image 
-        ? (product.image.startsWith('http')
-            ? product.image
-            : `${window.location.origin}${product.image}`)
-        : `${window.location.origin}/images/placeholder.jpg`);
+  const getPageUrl = () => {
+    if(typeof window !== 'undefined') {
+      return window.location.href;
+    }
+    const baseUrl = import.meta.env.VITE_APP_URL || "https://fe-eco.onrender.com";
+    return `${baseUrl}/product/${slug}`;
+  }
 
+  const getFullimageUrl = (image: string | any) => {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://be-ecom-2hfk.onrender.com";
+    
+    if(!image) return `${backendUrl}/images/${PLACEHOLDER_IMAGE}`;
+    if (image.startsWith('http')) return image;
+    return `${backendUrl}/images/${image}`;
+  }
   // Check if product is already in cart
   const existingCartItem = cartItems.find((item: any) => item.productId === product?.id);
   const cartQuantity = existingCartItem ? existingCartItem.quantity : 0;
@@ -492,25 +496,32 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
   }
 
   return (
-    <>
+    <>{
+      product && (
+        <Helmet>
+          <title>{product.meta_title || `${product.name} | ECom Store`}</title>
+          <meta name="description" content={product.meta_description || `Mua ${product.name} với giá tốt nhất.`} />
+          
+          <meta property='og:type' content='product'/>
+          <meta property="og:title" content={product.meta_title || `${product.name} | ECom Store`} />
+          <meta property="og:description" content={product.meta_description || `Mua ${product.name} với giá tốt nhất.`} />
+          <meta property="og:image" content={getFullimageUrl(product.image)} />
+          <meta property="og:url" content={getPageUrl()} />
+
+
+        </Helmet>
+      )
+    }
       {/* SEO Meta Tags */}
       <MetaTags
-        title={product.metaTitle}
-        description={product.metaDescription}
-        keywords={product.metaKeywords}
-        image={shareImage}
-        url={currentUrl}
+        title={product.meta_title}
+        description={product.meta_description}
+        keywords={product.meta_keywords}
+        image={getFullimageUrl(product.image)}
+        url={getPageUrl()}
         type="product"
         siteName="ECom - Cửa hàng điện tử trực tuyến"
         locale="vi_VN"
-        price={product.salePrice || product.price}
-        currency="USD"
-        availability={(product.stock || 0) > 0 ? "in stock" : "out of stock"}
-        brand={product.brand || 'ECom'}
-        category={typeof product.category === 'string' ? product.category : product.category?.name || ''}
-        sku={product.sku || product.id}
-        rating={product.rating}
-        reviewCount={product.reviewCount}
        
       />
 
@@ -689,7 +700,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
                 <Typography variant="subtitle2">
                   Chia sẻ sản phẩm này:
                 </Typography>
-                <FacebookShareButton url={currentUrl} hashtag="#ecom">
+                <FacebookShareButton url={getPageUrl()} hashtag="#EComStore">
                   <FacebookIcon size={40} round />
                 </FacebookShareButton>
               </Box>

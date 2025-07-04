@@ -30,13 +30,6 @@ export const MetaTags: React.FC<MetaTagsProps> = ({
   type = 'website',
   siteName = 'ECom',
   locale = 'vi_VN',
-  price,
-  currency = 'USD',
-  availability,
-  brand,
-  category,
-  sku,
-  structuredData
 }) => {
   const fullImageUrl = image.startsWith('http') ? image : `${window.location.origin}${image}`;
   const currentUrl = url || window.location.href;
@@ -65,18 +58,11 @@ export const MetaTags: React.FC<MetaTagsProps> = ({
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content={locale} />
-      <meta property="og:updated_time" content={new Date().toISOString()} />
       
       {/* Product Specific Meta Tags */}
       {type === 'product' && (
         <>
-          {price && <meta property="product:price:amount" content={String(price)} />}
-          {currency && <meta property="product:price:currency" content={currency} />}
-          {availability && <meta property="product:availability" content={availability} />}
-          {brand && <meta property="product:brand" content={brand} />}
-          {category && <meta property="product:category" content={category} />}
           <meta property="product:condition" content="new" />
-          {sku && <meta property="product:retailer_item_id" content={sku} />}
         </>
       )}
       
@@ -93,12 +79,7 @@ export const MetaTags: React.FC<MetaTagsProps> = ({
       <meta property="fb:app_id" content="your-facebook-app-id" />
       <meta name="pinterest-rich-pin" content="true" />
       
-      {/* Structured Data */}
-      {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      )}
+      
     </Helmet>
   );
 };
