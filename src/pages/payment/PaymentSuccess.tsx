@@ -85,10 +85,9 @@ const PaymentSuccess: React.FC = () => {
         }
 
         // Clear cart after successful payment
-        if (typeof window !== 'undefined') localStorage.removeItem('cart');
-        
-        // Clear cart on server and Redux store
         try {
+          if (typeof window !== 'undefined') localStorage.removeItem('cart');
+          localStorage.removeItem('cart');
           await axios.delete('/api/v1/cart/clear');
           dispatch(clearCart()); // Clear Redux store
         } catch (cartError) {
