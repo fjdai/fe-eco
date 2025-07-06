@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLoaderData } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
   Container,
@@ -48,7 +48,6 @@ import { getProductImageUrl, PLACEHOLDER_IMAGE } from '../../utils/imageHelpers'
 import { callGetProductBySlug } from '../../services/apiProducts/apiProducts';
 import { addToCart, addToCartAsync, fetchCart } from '../../redux/cart/cartSlice';
 import { Product } from '../../types/product';
-import { useProduct } from '../../context/ProductContext';
 
 const ProductImage = styled('img')(({ theme }) => ({
   width: '100%',
@@ -495,16 +494,11 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
     );
   }
 
-  const serverSeo : Product | any = useProduct();
-  const [productSeo, setProductSeo] = useState(serverSeo);
-  useEffect(() => {
-   
-  }, [serverSeo, slug]);
-
+  const productSeo : Product | any = useLoaderData()
 
   return (
     <>{
-      productSeo && (
+      product  && (
         <Helmet>
           <title>{productSeo.meta_title || `${productSeo.name} | ECom Store`}</title>
           <meta name="description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />

@@ -37,21 +37,9 @@ async function createServer() {
       template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
       render = (await import('./dist/server/entry-server.js')).render;
 
-      // 👉 Nếu là product page, fetch product data
-      let productSeo = null;
-      if (url.startsWith('/products/')) {
-        const slug = url.split('/products/')[1]
-        console.log(`Fetching product data for slug: ${slug}`);
-        
-        const productRes = await fetch(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`);
-        const productData = await productRes.json()
-        console.log(`Product data fetched:`, productData);
-        if (productData.statusCode === 200) {
-          productSeo = productData.data;
-        }
-      }
+      
 
-      const { html: appHtml, helmetContext } = await render(url, productSeo);
+      const { html: appHtml, helmetContext } = await render(url);
       const { helmet } = helmetContext;
 
       const head = helmet ? `

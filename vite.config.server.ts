@@ -10,10 +10,18 @@ export default defineConfig({
   },
   ssr: {
     noExternal: [
-      /^@mui\/.*/,
-      /^react-helmet-async$/,
-      /^react-share$/,
-      /^react-toastify$/,
+       /^@mui\/.*/,
+      'react',
+      'react-dom',
+      'react-redux',
+      'use-sync-external-store',
+      'react-router',
+      'react-router-dom',
+      'react-helmet-async',
+      'react-share',
+      'react-toastify',
+      '@emotion/react',
+      '@emotion/styled'
     ],
     target: 'node',
   },

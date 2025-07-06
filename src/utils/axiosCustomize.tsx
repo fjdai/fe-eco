@@ -28,42 +28,44 @@ const handleRefreshToken = async () => {
 }
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
-    nProgress.start();
-    if (typeof window !== "undefined" && window && window.localStorage && window.localStorage.getItem("access_token")) {
-        config.headers.Authorization = "Bearer " + window.localStorage.getItem("access_token")
+    if (typeof window !== 'undefined') {
+        nProgress.start();
     }
-    // Do something before request is sent
+
+    if (typeof window !== "undefined" && window.localStorage.getItem("access_token")) {
+        config.headers.Authorization = "Bearer " + window.localStorage.getItem("access_token");
+    }
+
     return config;
 }, function (error) {
-    // Do something with request error
-    nProgress.done();
+    if (typeof window !== 'undefined') {
+        nProgress.done();
+    }
     return Promise.reject(error);
 });
 
-const NO_RETRY_HEADER = "x-no-retry";
-
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-
-    nProgress.done();
+    if (typeof window !== 'undefined') {
+        nProgress.done();
+    }
     return response && response.data ? response.data : response;
 }, async function (error) {
-    nProgress.done();
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+    if (typeof window !== 'undefined') {
+        nProgress.done();
+    }
+
+    // Các đoạn xử lý token refresh và 401 vẫn giữ nguyên
     if (error.config && error.response && +error.response.statusCode === 401 && !error.config.headers[NO_RETRY_HEADER]) {
-        console.log(error.response);
         const access_token = await handleRefreshToken();
         error.config.headers[NO_RETRY_HEADER] = "true";
         if (access_token) {
             error.config.headers['Authorization'] = `Bearer ${access_token}`;
             if (typeof window !== 'undefined') localStorage.setItem("access_token", access_token);
-
             return instance.request(error.config);
         }
     }
+
     if (error.config && error.response
         && +error.response.status === 400
         && error.config.url === "/api/v1/auth/refresh"
@@ -74,14 +76,11 @@ instance.interceptors.response.use(function (response) {
             && !window.location.pathname.startsWith("clinic")
             && !window.location.pathname.startsWith("doctor")
         ) {
-            if (typeof window !== 'undefined') {
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("refresh_token");
-                window.location.href = "/login";
-            }
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            window.location.href = "/login";
         }
     }
-
 
     return error?.response?.data ?? Promise.reject(error);
 });

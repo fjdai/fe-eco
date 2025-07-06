@@ -22,7 +22,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import ProductDetailPage from "./pages/products/detailproduct";
 import ProductsPage from "./pages/products/productspage";
 import Layout from './components/layout/EComLayout';
-
+import { productDetailLoader } from './loaders/productDetailLoader';
 
 
 const routes = [
@@ -38,6 +38,7 @@ const routes = [
       {
         path: "products/:slug",
         element: <ProductDetailPage />,
+        loader:  productDetailLoader
       },
       {
         path: "products",
