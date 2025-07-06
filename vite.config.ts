@@ -4,8 +4,9 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
- build: {
+  build: {
   ssrManifest: true,
+  manifest: true,
   rollupOptions: {
     input: resolve(__dirname, 'index.html'),
   },
