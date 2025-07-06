@@ -1,4 +1,3 @@
-import React from 'react';
 import { createBrowserRouter, createMemoryRouter } from 'react-router-dom';
 import Home from "./pages/home/ModernEcommerceHomePage";
 import EcommerceLoginPage from "./pages/login/EcommerceLoginPage";

@@ -13,9 +13,6 @@ const isProduction = process.env.NODE_ENV === 'production';
 const BOTS = [
   'facebookexternalhit',
   'Facebot',
-  'LinkedInBot',
-  'Twitterbot',
-  'WhatsApp',
 ];
 
 function isBot(userAgent) {
@@ -63,9 +60,24 @@ async function createServer() {
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render;
       } else {
-        template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
-        render = (await import('./dist/server/entry-server.js')).render;
-      }
+  template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
+  render = (await import('./dist/server/entry-server.js')).render;
+
+  // Load manifest
+  const manifest = JSON.parse(
+    fs.readFileSync(resolve(__dirname, 'dist/client/ssr-manifest.json'), 'utf-8')
+  );
+
+  // Get client entry
+  const clientEntry = manifest['src/entry-client.tsx'].file;
+
+  // Replace <script type="module"> vào cuối body
+  template = template.replace(
+    '</body>',
+    `<script type="module" src="/assets/${clientEntry}"></script></body>`
+  );
+}
+
 
       // Increase timeout for bots
       if (isWebCrawler) {
