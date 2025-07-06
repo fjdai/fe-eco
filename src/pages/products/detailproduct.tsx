@@ -238,9 +238,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
   const getFullimageUrl = (image: string | any) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://be-ecom-2hfk.onrender.com";
     
-    if(!image) return `${backendUrl}/images/${PLACEHOLDER_IMAGE}`;
+    if(!image) return `${backendUrl}${PLACEHOLDER_IMAGE}`;
     if (image.startsWith('http')) return image;
-    return `${backendUrl}/images/${image}`;
+    return `${backendUrl}${image}`;
   }
   // Check if product is already in cart
   const existingCartItem = cartItems.find((item: any) => item.productId === product?.id);
