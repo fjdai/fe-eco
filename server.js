@@ -61,14 +61,9 @@ async function createServer() {
         ${helmet.script.toString()}
       ` : '';
 
-      const scripts = isProduction
-        ? `<script type="module" src="/${clientEntry}"></script>`
-        : '';
-
       const finalHtml = template
         .replace('<!--app-head-->', head)
         .replace('<!--app-html-->', appHtml)
-        .replace('<!--app-scripts-->', scripts);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml);
     } catch (e) {
