@@ -124,22 +124,8 @@ export function createRouter() {
   return createBrowserRouter(routes);
 }
 
-// Chỉ định nghĩa các routes cần SSR
-const ssrRoutes = [
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "products/:slug",
-        element: <ProductDetailPage />,
-      }
-    ]
-  }
-];
-
 export function createServerRouter(location: string) {
-  return createMemoryRouter(ssrRoutes, {
+  return createMemoryRouter(routes, {
     initialEntries: [location],
   });
-} 
+}
