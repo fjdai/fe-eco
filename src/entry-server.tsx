@@ -8,8 +8,8 @@ export function render(url: string) {
   const router = createServerRouter(url);
   
   const html = ReactDOMServer.renderToString(
-    <AppProviders >
-        <RouterProvider router={router} />
+    <AppProviders  helmetContext={helmetContext}>
+        <RouterProvider router={router}  />
       </AppProviders >
   );
 

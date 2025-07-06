@@ -46,7 +46,7 @@ async function createServer() {
         const slug = url.split('/product/')[1]
         const productRes = await fetch(`https://be-ecom-2hfk.onrender.com/api/v1/products/${slug}`);
         if (productRes.ok) {
-          product = await productRes.json();
+          product = await productRes.json();  
         }
       }
 
