@@ -29,29 +29,29 @@ async function createServer() {
     try {
       const url = req.originalUrl;
 
-      let template, render, clientEntry;
+      let template, render;
 
       if (!isProduction) {
         template = fs.readFileSync(resolve(__dirname, 'index.html'), 'utf-8');
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render;
       } else {
-        // ✅ Đọc template trong dist/client
         template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
-
-        // ✅ Import server bundle render
         render = (await import('./dist/server/entry-server.js')).render;
-
-        // ✅ Đọc manifest đúng file .vite/manifest.json
-        const manifest = JSON.parse(
-          fs.readFileSync(resolve(__dirname, 'dist/client/.vite/manifest.json'), 'utf-8')
-        );
-
-        // ✅ Lấy đúng client entry file
-        clientEntry = manifest['src/entry-client.tsx'].file;
       }
 
-      const { html: appHtml, helmetContext } = await render(url);
+      // 👉 Nếu là product page, fetch product data
+      let product = null;
+      if (url.startsWith('/product/')) {
+        const slug = url.split('/product/')[1]
+        const productRes = await fetch(`https://be-ecom-2hfk.onrender.com/api/v1/products/${slug}`);
+        if (productRes.ok) {
+          product = await productRes.json();
+        }
+      }
+
+      // 👉 Pass product vào render
+      const { html: appHtml, helmetContext } = await render(url, product);
       const { helmet } = helmetContext;
 
       const head = helmet ? `
@@ -63,7 +63,7 @@ async function createServer() {
 
       const finalHtml = template
         .replace('<!--app-head-->', head)
-        .replace('<!--app-html-->', appHtml)
+        .replace('<!--app-html-->', appHtml);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml);
     } catch (e) {
