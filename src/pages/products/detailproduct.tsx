@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { MetaTags } from '../../components/MetaTags';
 import {
   Container,
   Grid,
@@ -49,6 +48,7 @@ import { getProductImageUrl, PLACEHOLDER_IMAGE } from '../../utils/imageHelpers'
 import { callGetProductBySlug } from '../../services/apiProducts/apiProducts';
 import { addToCart, addToCartAsync, fetchCart } from '../../redux/cart/cartSlice';
 import { Product } from '../../types/product';
+import { useProduct } from '../../context/ProductContext';
 
 const ProductImage = styled('img')(({ theme }) => ({
   width: '100%',
@@ -495,17 +495,19 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
     );
   }
 
+  const productSeo : Product | any = useProduct();
+
   return (
     <>{
       product && (
         <Helmet>
-          <title>{product.meta_title || `${product.name} | ECom Store`}</title>
-          <meta name="description" content={product.meta_description || `Mua ${product.name} với giá tốt nhất.`} />
+          <title>{productSeo.meta_title || `${productSeo.name} | ECom Store`}</title>
+          <meta name="description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />
           
           <meta property='og:type' content='product'/>
-          <meta property="og:title" content={product.meta_title || `${product.name} | ECom Store`} />
-          <meta property="og:description" content={product.meta_description || `Mua ${product.name} với giá tốt nhất.`} />
-          <meta property="og:image" content={getFullimageUrl(product.image)} />
+          <meta property="og:title" content={productSeo.meta_title || `${productSeo.name} | ECom Store`} />
+          <meta property="og:description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />
+          <meta property="og:image" content={getFullimageUrl(productSeo.image)} />
           <meta property="og:url" content={getPageUrl()} />
 
 
@@ -513,17 +515,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
       )
     }
       {/* SEO Meta Tags */}
-      <MetaTags
-        title={product.meta_title}
-        description={product.meta_description}
-        keywords={product.meta_keywords}
-        image={getFullimageUrl(product.image)}
-        url={getPageUrl()}
-        type="product"
-        siteName="ECom - Cửa hàng điện tử trực tuyến"
-        locale="vi_VN"
-       
-      />
+     
 
       <Container maxWidth="lg" sx={{ py: 4 }}>
         {/* Breadcrumbs */}

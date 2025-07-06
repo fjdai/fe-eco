@@ -5,6 +5,8 @@ import { createServer as createViteServer } from 'vite';
 import compression from 'compression';
 import sirv from 'sirv';
 import fs from 'fs';
+import { Logger } from 'sass';
+import axios from 'axios';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -31,27 +33,24 @@ async function createServer() {
 
       let template, render;
 
-      if (!isProduction) {
-        template = fs.readFileSync(resolve(__dirname, 'index.html'), 'utf-8');
-        template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render;
-      } else {
-        template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
-        render = (await import('./dist/server/entry-server.js')).render;
-      }
+     
+      template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
+      render = (await import('./dist/server/entry-server.js')).render;
 
       // 👉 Nếu là product page, fetch product data
-      let product = null;
+      let productSeo = null;
       if (url.startsWith('/product/')) {
         const slug = url.split('/product/')[1]
-        const productRes = await fetch(`https://be-ecom-2hfk.onrender.com/api/v1/products/${slug}`);
-        if (productRes.ok) {
-          product = await productRes.json();  
+        console.log(`Fetching product data for slug: ${slug}`);
+        
+        const productRes = await axios.get(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`);
+        if (productRes?.statusCode === 200) {
+          productSeo = await productRes.data;  
         }
       }
 
       // 👉 Pass product vào render
-      const { html: appHtml, helmetContext } = await render(url, product);
+      const { html: appHtml, helmetContext } = await render(url, productSeo);
       const { helmet } = helmetContext;
 
       const head = helmet ? `

@@ -7,6 +7,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import 'nprogress/nprogress.css';
 import "./styles/main.scss"
 import "./assets/global.css";
+import { ProductContext } from './context/ProductContext.tsx';
 
 const theme = createTheme({
   palette: {
@@ -181,14 +182,16 @@ const theme = createTheme({
   }
 });
 
-export function AppProviders({ children, helmetContext }: PropsWithChildren   & { helmetContext?: any }) {
+export function AppProviders({ children, helmetContext, product }: PropsWithChildren   & { helmetContext?: any, product?: any }) {
   return (
     <Provider store={store}>
       <HelmetProvider context={helmetContext}>
+        <ProductContext.Provider value={product}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           {children}
         </ThemeProvider>
+        </ProductContext.Provider>
       </HelmetProvider>
     </Provider>
   )

@@ -3,15 +3,15 @@ import { RouterProvider } from 'react-router-dom';
 import { createServerRouter } from './router';
 import { AppProviders } from './AppServerProvider';
 
-export function render(url: string) {
-  const helmetContext = {};
+export function render(url: string, productSeo: any = null) {
+  const helmetContext = { };
   const router = createServerRouter(url);
   
   const html = ReactDOMServer.renderToString(
-    <AppProviders  helmetContext={helmetContext}>
+    <AppProviders  helmetContext={helmetContext} product={productSeo}>
         <RouterProvider router={router}  />
       </AppProviders >
   );
 
-  return { html, helmetContext, url };
+  return { html, helmetContext };
 } 
