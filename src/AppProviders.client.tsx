@@ -1,6 +1,4 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+import { PropsWithChildren, StrictMode } from 'react'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -184,19 +182,20 @@ const theme = createTheme({
     borderRadius: 12
   }
 });
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <HelmetProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <App />
-            <ToastContainer autoClose={2500} />
-          </ThemeProvider>
-        </HelmetProvider>
-      </PersistGate >
-    </Provider>
-  </StrictMode>
-)
+export function AppProviders({ children }: PropsWithChildren) {
+  return (
+    <StrictMode>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <HelmetProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {children}
+              <ToastContainer autoClose={2500} />
+            </ThemeProvider>
+          </HelmetProvider>
+        </PersistGate>
+      </Provider>
+    </StrictMode>
+  )
+}

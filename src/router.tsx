@@ -121,14 +121,7 @@ const routes = [
   },
 ];
 
-export function createRouter(location?: string) {
-  if (typeof window === 'undefined') {
-    // Server side
-    return createMemoryRouter(routes, {
-      initialEntries: location ? [location] : ['/'],
-    });
-  }
-  // Client side
+export function createRouter() {
   return createBrowserRouter(routes);
 }
 

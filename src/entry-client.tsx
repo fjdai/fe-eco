@@ -15,7 +15,7 @@ ReactDOM.hydrateRoot(
     <HelmetProvider>
       <CssBaseline />
       <RouterProvider router={router} />
-       <ToastContainer autoClose={2500} />
+      <ToastContainer autoClose={2500} />
     </HelmetProvider>
   </Provider>
 ); 

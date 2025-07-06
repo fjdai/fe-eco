@@ -5,7 +5,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { createServerRouter } from './router';
 import { store } from './redux/store';
 import { CssBaseline } from '@mui/material';
-import { ToastContainer } from 'react-toastify';
 
 export function render(url: string) {
   const helmetContext = {};
@@ -16,7 +15,6 @@ export function render(url: string) {
       <HelmetProvider context={helmetContext}>
         <CssBaseline />
         <RouterProvider router={router} />
-         <ToastContainer autoClose={2500} />
       </HelmetProvider>
     </Provider>
   );
