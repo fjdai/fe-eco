@@ -41,7 +41,7 @@ async function createServer() {
         render = (await import('./dist/server/entry-server.js')).render;
 
         const manifest = JSON.parse(
-          fs.readFileSync(resolve(__dirname, 'dist/client/ssr-manifest.json'), 'utf-8')
+          fs.readFileSync(resolve(__dirname, 'dist/client/.vite/ssr-manifest.json'), 'utf-8')
         );
         clientEntry = manifest['src/entry-client.tsx'].file;
       }
