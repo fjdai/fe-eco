@@ -21,7 +21,9 @@ export default defineConfig({
       'react-share',
       'react-toastify',
       '@emotion/react',
-      '@emotion/styled'
+      '@emotion/styled',
+       'swiper', 
+      'swiper/react'
     ],
     target: 'node',
   },
