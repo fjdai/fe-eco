@@ -39,17 +39,18 @@ async function createServer() {
 
       // 👉 Nếu là product page, fetch product data
       let productSeo = null;
-      if (url.startsWith('/product/')) {
-        const slug = url.split('/product/')[1]
+      if (url.startsWith('/products/')) {
+        const slug = url.split('/products/')[1]
         console.log(`Fetching product data for slug: ${slug}`);
         
-        const productRes = await axios.get(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`);
-        if (productRes?.statusCode === 200) {
-          productSeo = await productRes.data;  
+        const productRes = await fetch(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`);
+        const productData = await productRes.json()
+        console.log(`Product data fetched:`, productData);
+        if (productData.statusCode === 200) {
+          productSeo = productData.data;
         }
       }
 
-      // 👉 Pass product vào render
       const { html: appHtml, helmetContext } = await render(url, productSeo);
       const { helmet } = helmetContext;
 
