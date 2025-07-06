@@ -10,7 +10,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isProduction = true;
 
-
 async function createServer() {
   const app = express();
   app.use(compression());
@@ -23,7 +22,7 @@ async function createServer() {
     });
     app.use(vite.middlewares);
   } else {
-    app.use(sirv('dist/client', { gzip: true }));
+    app.use(sirv(resolve(__dirname, 'dist/client'), { gzip: true, extensions: [] }));
   }
 
   app.use('*', async (req, res) => {
@@ -37,12 +36,18 @@ async function createServer() {
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render;
       } else {
+        // ✅ Đọc template trong dist/client
         template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
+
+        // ✅ Import server bundle render
         render = (await import('./dist/server/entry-server.js')).render;
 
+        // ✅ Đọc manifest đúng file .vite/manifest.json
         const manifest = JSON.parse(
-          fs.readFileSync(resolve(__dirname, 'dist/client/.vite/ssr-manifest.json'), 'utf-8')
+          fs.readFileSync(resolve(__dirname, 'dist/client/.vite/manifest.json'), 'utf-8')
         );
+
+        // ✅ Lấy đúng client entry file
         clientEntry = manifest['src/entry-client.tsx'].file;
       }
 
@@ -75,7 +80,7 @@ async function createServer() {
 
   const port = process.env.PORT || 3001;
   app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`✅ Server running at http://localhost:${port}`);
   });
 }
 

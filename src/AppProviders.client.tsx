@@ -1,4 +1,4 @@
-import { PropsWithChildren, StrictMode } from 'react'
+import { PropsWithChildren } from 'react'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -184,7 +184,6 @@ const theme = createTheme({
 });
 export function AppProviders({ children }: PropsWithChildren) {
   return (
-    <StrictMode>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <HelmetProvider>
@@ -196,6 +195,5 @@ export function AppProviders({ children }: PropsWithChildren) {
           </HelmetProvider>
         </PersistGate>
       </Provider>
-    </StrictMode>
   )
 }
