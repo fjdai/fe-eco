@@ -497,13 +497,8 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
 
   const serverSeo : Product | any = useProduct();
   const [productSeo, setProductSeo] = useState(serverSeo);
-   useEffect(() => {
-    if (!serverSeo) {
-      fetch(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`)
-        .then(res => res.json())
-        .then(data => setProduct(data))
-        .catch(console.error);
-    }
+  useEffect(() => {
+   
   }, [serverSeo, slug]);
 
 
