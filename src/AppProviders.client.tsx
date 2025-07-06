@@ -3,8 +3,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from 'react-redux';
-import { persistor, store } from './redux/store.tsx';
-import { PersistGate } from 'redux-persist/lib/integration/react';
+import {  store } from './redux/store.tsx';
 import { HelmetProvider } from 'react-helmet-async';
 import 'nprogress/nprogress.css';
 import "./styles/main.scss"
@@ -185,7 +184,6 @@ const theme = createTheme({
 export function AppProviders({ children }: PropsWithChildren) {
   return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
           <HelmetProvider>
             <ThemeProvider theme={theme}>
               <CssBaseline />
@@ -193,7 +191,6 @@ export function AppProviders({ children }: PropsWithChildren) {
               <ToastContainer autoClose={2500} />
             </ThemeProvider>
           </HelmetProvider>
-        </PersistGate>
       </Provider>
   )
 }

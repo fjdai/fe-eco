@@ -21,7 +21,9 @@ import OrderDetailPage from "./pages/orders/OrderDetailPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import ProductDetailPage from "./pages/products/detailproduct";
 import ProductsPage from "./pages/products/productspage";
-import { Layout } from './App';
+import Layout from './components/layout/EComLayout';
+
+
 
 const routes = [
   {
