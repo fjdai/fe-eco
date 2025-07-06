@@ -101,10 +101,15 @@ async function createServer() {
         ${helmet.script.toString()}
       ` : '';
 
-      // Insert meta tags and content
+      let scripts = '';
+      if (isProduction) {
+        scripts = `<script type="module" src="/assets/entry-client.js"></script>`;
+      }
+
       const finalHtml = template
         .replace('<!--app-head-->', head)
-        .replace('<!--app-html-->', appHtml);
+        .replace('<!--app-html-->', appHtml)
+        .replace('<!--app-scripts-->', scripts);
 
       // Cache response for bots
       if (isWebCrawler) {

@@ -1,72 +1,75 @@
-  <!DOCTYPE html>
-  <html lang="en">
-
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet">
-    
-    <!-- Primary Meta Tags -->
+      rel="stylesheet"
+    />
+
+    <!-- SEO -->
     <title>ECom - Best Products Online</title>
-    <meta name="title" content="ECom - Best Products Online">
-    <meta name="description" content="Discover amazing products at great prices. Shop online with secure payment, fast delivery, and excellent customer service.">
-    <meta name="keywords" content="ecom, online shopping, products, deals, store">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fe-eco.onrender.com/">
-    <meta property="og:title" content="ECom - Best Products Online">
-    <meta property="og:description" content="Discover amazing products at great prices. Shop online with secure payment, fast delivery, and excellent customer service.">
-    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+    <meta name="title" content="ECom - Best Products Online" />
+    <meta name="description" content="Discover amazing products at great prices. Shop online with secure payment, fast delivery, and excellent customer service." />
+    <meta name="keywords" content="ecom, online shopping, products, deals, store" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fe-eco.onrender.com/" />
+    <meta property="og:title" content="ECom - Best Products Online" />
+    <meta property="og:description" content="Discover amazing products at great prices. Shop online with secure payment, fast delivery, and excellent customer service." />
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg" />
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() {
+        dataLayer.push(arguments);
+      }
       gtag('js', new Date());
       gtag('config', 'G-XXXXXXXXXX');
     </script>
-    
+
+    <!-- App head placeholder -->
+    <!--app-head-->
   </head>
 
   <body>
-    <!-- Facebook Pixel noscript -->
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=YOUR_FACEBOOK_PIXEL_ID&ev=PageView&noscript=1"
-    /></noscript>
-    
     <div id="root"><!--app-html--></div>
-    
-    <!-- Facebook Messenger Plugin -->
+
+    <!-- Messenger & Pixel -->
     <div id="fb-root"></div>
     <script>
-      window.fbAsyncInit = function() {
+      window.fbAsyncInit = function () {
         FB.init({
           xfbml: true,
           version: 'v18.0'
         });
       };
-
-      (function(d, s, id) {
+      (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
+        js = d.createElement(s);
+        js.id = id;
         js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
         fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
+      })(document, 'script', 'facebook-jssdk');
     </script>
 
-    <!-- Your Chat Plugin code -->
-    <div class="fb-customerchat"
+    <div
+      class="fb-customerchat"
       attribution="biz_inbox"
-      page_id="YOUR_FACEBOOK_PAGE_ID">
-    </div>
-  </body>
+      page_id="YOUR_FACEBOOK_PAGE_ID"
+    ></div>
 
-  </html>
+    <!-- Production client script inject -->
+    <!--app-scripts-->
+  </body>
+</html>
