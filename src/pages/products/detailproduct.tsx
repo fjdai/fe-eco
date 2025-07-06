@@ -495,28 +495,33 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
     );
   }
 
-  const productSeo : Product | any = useProduct();
+  const serverSeo : Product | any = useProduct();
+  const [productSeo, setProductSeo] = useState(serverSeo);
+   useEffect(() => {
+    if (!serverSeo) {
+      fetch(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`)
+        .then(res => res.json())
+        .then(data => setProduct(data))
+        .catch(console.error);
+    }
+  }, [serverSeo, slug]);
+
 
   return (
     <>{
-      product && (
+      productSeo && (
         <Helmet>
           <title>{productSeo.meta_title || `${productSeo.name} | ECom Store`}</title>
           <meta name="description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />
-          
           <meta property='og:type' content='product'/>
           <meta property="og:title" content={productSeo.meta_title || `${productSeo.name} | ECom Store`} />
           <meta property="og:description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />
           <meta property="og:image" content={getFullimageUrl(productSeo.image)} />
           <meta property="og:url" content={getPageUrl()} />
 
-
         </Helmet>
       )
     }
-      {/* SEO Meta Tags */}
-     
-
       <Container maxWidth="lg" sx={{ py: 4 }}>
         {/* Breadcrumbs */}
         <Breadcrumbs sx={{ mb: 3 }}>
