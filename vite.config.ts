@@ -4,14 +4,13 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-      },
-    },
-    ssrManifest: true,
+ build: {
+  ssrManifest: true,
+  rollupOptions: {
+    input: resolve(__dirname, 'index.html'),
   },
+},
+
   ssr: {
     noExternal: [
       /^@mui\/.*/,
