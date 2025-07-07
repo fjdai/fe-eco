@@ -37,7 +37,21 @@ async function createServer() {
       template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
       render = (await import('./dist/server/entry-server.js')).render;
 
-      
+      let productMeta = {}
+      if (url.startsWith('/product/')) {
+        const slug = url.split('/product/')[1]
+        const response = await fetch(`https://be-ecom-2hfk.onrender.com/api/products/slug/${slug}`)
+        if(response?.statusCode === 200) {
+          const product = response.data;
+          productMeta = {
+            title: product.meta_title,
+            description: product.meta_description,
+            image: `https://fe-ecom-2hfk.onrender.com/images/${product.image}`,
+            url: `https://fe-ecom-2hfk.onrender.com/product/${product.slug}`
+          };
+        }
+      }
+
 
       const { html: appHtml, helmetContext } = await render(url);
       const { helmet } = helmetContext;
@@ -51,7 +65,11 @@ async function createServer() {
 
       const finalHtml = template
         .replace('<!--app-head-->', head)
-        .replace('<!--app-html-->', appHtml);
+        .replace('<!--app-html-->', appHtml)
+        .replace('<!--ssr-meta-title-->', productMeta.title || '')
+        .replace('<!--ssr-meta-description-->', productMeta.description || '')
+        .replace('<!--ssr-meta-image-->', productMeta.image || '')
+        .replace('<!--ssr-meta-url-->', productMeta.url || '');
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml);
     } catch (e) {
