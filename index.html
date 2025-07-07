@@ -12,7 +12,7 @@
     <meta name="author" content="ECom Store" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://fe-eco.onrender.com" />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="ECom Store" />
     <meta property="og:type" content="website" />
@@ -23,17 +23,15 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:url" content="https://fe-eco.onrender.com" />
     <meta property="og:locale" content="vi_VN" />
-    
-    <!-- Facebook App ID (replace with your actual FB App ID) -->
-    <meta property="fb:app_id" content="YOUR_FB_APP_ID" />
-    
+    <meta property="fb:app_id" content="1784956665094089" />
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ECom Store - Mua sắm trực tuyến với giá tốt nhất" />
     <meta name="twitter:description" content="ECom Store - Cửa hàng trực tuyến hàng đầu với hàng ngàn sản phẩm chính hãng, giá tốt, giao hàng nhanh toàn quốc." />
     <meta name="twitter:image" content="https://fe-eco.onrender.com/images/logo-og.jpg" />
 
-    <!-- fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -48,8 +46,8 @@
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      gtag("js", new Date());
+      gtag("config", "G-XXXXXXXXXX");
     </script>
 
     <!-- Facebook Pixel -->
@@ -66,49 +64,44 @@
       fbq('track', 'PageView');
     </script>
 
-    <!-- App head placeholder -->
     <!--app-head-->
   </head>
 
   <body>
     <!-- Facebook Pixel noscript -->
     <noscript>
-      <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_FACEBOOK_PIXEL_ID&ev=PageView&noscript=1"/>
+      <img height="1" width="1" style="display:none"
+           src="https://www.facebook.com/tr?id=YOUR_FACEBOOK_PIXEL_ID&ev=PageView&noscript=1" />
     </noscript>
-    
+
     <div id="root"><!--app-html--></div>
 
-    <!-- Facebook SDK -->
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v18.0&appId=YOUR_FACEBOOK_APP_ID&autoLogAppEvents=1"></script>
-
-    <!-- Messenger Customer Chat Plugin -->
+    <!-- Facebook SDK và Messenger Customer Chat -->
     <div id="fb-root"></div>
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId: 'YOUR_FACEBOOK_APP_ID',
+          appId: "1784956665094089",
           xfbml: true,
-          version: 'v18.0'
+          version: "v18.0"
         });
       };
 
-      (function(d, s, id) {
+      (function(d, s, id){
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        js.src = "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
 
-    <!-- Customer Chat Widget -->
     <div class="fb-customerchat"
-      attribution="biz_inbox"
-      page_id="YOUR_FACEBOOK_PAGE_ID"
-      theme_color="#45c3d2"
-      logged_in_greeting="Xin chào! Chúng tôi có thể giúp gì cho bạn?"
-      logged_out_greeting="Xin chào! Chúng tôi có thể giúp gì cho bạn?">
+         attribution="biz_inbox"
+         page_id="721672294359124"
+         theme_color="#45c3d2"
+         logged_in_greeting="Xin chào! Chúng tôi có thể giúp gì cho bạn?"
+         logged_out_greeting="Xin chào! Bạn vui lòng đăng nhập Facebook để trò chuyện với chúng tôi.">
     </div>
 
     <!-- Vite client entry -->
