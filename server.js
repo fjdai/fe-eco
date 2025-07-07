@@ -48,11 +48,6 @@ async function createServer() {
         const response = await axios.get(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`);
         const product = response?.data?.data;
         if (product) {
-          console.log('Product found:', JSON.stringify(product));
-          console.log('Product meta title:', product.meta_title);
-          console.log('Product meta description:', product.meta_description);
-          console.log('Product image:', product.image[0]);
-          console.log('Product slug:', product.slug);
           metaTags = `
             <title>${product.meta_title}</title>
             <meta property="og:title" content="${product.meta_title}">
