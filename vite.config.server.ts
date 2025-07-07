@@ -17,12 +17,11 @@ export default defineConfig({
       'use-sync-external-store',
       'react-router',
       'react-router-dom',
-      'react-helmet-async',
       'react-share',
       'react-toastify',
       '@emotion/react',
       '@emotion/styled',
-       'swiper', 
+      'swiper', 
       'swiper/react'
     ],
     target: 'node',

@@ -1,4 +1,3 @@
-// ...existing code from index.page.tsx will be moved here...
 import React, { useState, useEffect, useCallback } from 'react';
 import {
     Box,

@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from 'react-redux';
 import {  store } from './redux/store.tsx';
-import { HelmetProvider } from 'react-helmet-async';
 import 'nprogress/nprogress.css';
 import "./styles/main.scss"
 import "./assets/global.css";
@@ -184,13 +183,11 @@ const theme = createTheme({
 export function AppProviders({ children }: PropsWithChildren) {
   return (
       <Provider store={store}>
-          <HelmetProvider>
             <ThemeProvider theme={theme}>
               <CssBaseline />
               {children}
               <ToastContainer autoClose={2500} />
             </ThemeProvider>
-          </HelmetProvider>
       </Provider>
   )
 }

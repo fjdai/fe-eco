@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLoaderData } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
   Grid,
@@ -120,10 +119,7 @@ interface ProductDetailPageProps {
   };
 }
 
-const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
-  const ssrProduct = pageProps?.product;
-  const ssrError = pageProps?.error;
-
+const ProductDetailPage: React.FC<ProductDetailPageProps> = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -134,9 +130,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
   const isSyncing = useSelector((state: any) => state.cart.isSyncing);
 
   // State management
-  const [product, setProduct] = useState<Product | null>(ssrProduct || null);
-  const [loading, setLoading] = useState(!ssrProduct);
-  const [error, setError] = useState<string>(ssrError || '');
+  const [product, setProduct] = useState<Product | null>( null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
   const [selectedTab, setSelectedTab] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -157,7 +153,6 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
 
   // Fetch product data from API nếu không có SSR product
   useEffect(() => {
-    if (ssrProduct) return;
     const fetchProduct = async () => {
       if (!slug) return;
       try {
@@ -224,7 +219,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
       }
     };
     fetchProduct();
-  }, [slug, ssrProduct]);
+  }, [slug]);
 
   const getPageUrl = () => {
     if(typeof window !== 'undefined') {
@@ -234,13 +229,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
     return `${baseUrl}/product/${slug}`;
   }
 
-  const getFullimageUrl = (image: string | any) => {
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://be-ecom-2hfk.onrender.com";
-    
-    if(!image) return `${backendUrl}${PLACEHOLDER_IMAGE}`;
-    if (image.startsWith('http')) return image;
-    return `${backendUrl}${image}`;
-  }
+  
   // Check if product is already in cart
   const existingCartItem = cartItems.find((item: any) => item.productId === product?.id);
   const cartQuantity = existingCartItem ? existingCartItem.quantity : 0;
@@ -494,23 +483,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
     );
   }
 
-  const productSeo : Product | any = useLoaderData()
 
   return (
-    <>{
-      product  && (
-        <Helmet>
-          <title>{productSeo.meta_title || `${productSeo.name} | ECom Store`}</title>
-          <meta name="description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />
-          <meta property='og:type' content='product'/>
-          <meta property="og:title" content={productSeo.meta_title || `${productSeo.name} | ECom Store`} />
-          <meta property="og:description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />
-          <meta property="og:image" content={getFullimageUrl(productSeo.image)} />
-          <meta property="og:url" content={getPageUrl()} />
-
-        </Helmet>
-      )
-    }
+    <>
       <Container maxWidth="lg" sx={{ py: 4 }}>
         {/* Breadcrumbs */}
         <Breadcrumbs sx={{ mb: 3 }}>

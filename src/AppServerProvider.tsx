@@ -3,7 +3,6 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from 'react-redux';
 import {  store } from './redux/store.tsx';
-import { HelmetProvider } from 'react-helmet-async';
 import "./styles/main.scss"
 import "./assets/global.css";
 
@@ -183,12 +182,10 @@ const theme = createTheme({
 export function AppProviders({ children, helmetContext }: PropsWithChildren   & { helmetContext?: any, product?: any }) {
   return (
     <Provider store={store}>
-      <HelmetProvider context={helmetContext}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           {children}
         </ThemeProvider>
-      </HelmetProvider>
     </Provider>
   )
 }

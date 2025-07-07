@@ -1,7 +1,6 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import { createServer as createViteServer } from 'vite';
 import compression from 'compression';
 import sirv from 'sirv';
 import fs from 'fs';
@@ -15,16 +14,7 @@ async function createServer() {
   const app = express();
   app.use(compression());
 
-  let vite;
-  if (!isProduction) {
-    vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'custom'
-    });
-    app.use(vite.middlewares);
-  } else {
-    app.use(sirv(resolve(__dirname, 'dist/client'), { gzip: true, extensions: [] }));
-  }
+  app.use(sirv(resolve(__dirname, 'dist/client'), { gzip: true, extensions: [] }));
 
   app.use('*', async (req, res) => {
     try {
