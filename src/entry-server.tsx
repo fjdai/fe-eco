@@ -8,9 +8,9 @@ export function render(url: string, productSeo: any = null) {
   const router = createServerRouter(url);
   
   const html = ReactDOMServer.renderToString(
-    <AppProviders  helmetContext={helmetContext} product={productSeo}>
-        <RouterProvider router={router}  />
-      </AppProviders >
+    <AppProviders helmetContext={helmetContext} product={productSeo}>
+      <RouterProvider router={router} />
+    </AppProviders>
   );
 
   return { html, helmetContext };

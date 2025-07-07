@@ -155,9 +155,60 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
     }
   }, [isAuthenticated, dispatch]);
 
-  // Fetch product data from API nếu không có SSR product
+  // Fetch product data from API if no SSR product
   useEffect(() => {
-    if (ssrProduct) return;
+    if (ssrProduct) {
+      // Transform server data to match client structure
+      const transformedProduct = {
+        ...ssrProduct,
+        price: parseFloat(ssrProduct.price) || 0,
+        salePrice: ssrProduct.sale_price ? parseFloat(ssrProduct.sale_price) : undefined,
+        images: ssrProduct.images && ssrProduct.images.length > 0 
+          ? ssrProduct.images.map((imageName: string) => getProductImageUrl(imageName))
+          : [getProductImageUrl(ssrProduct.image)],
+        image: getProductImageUrl(ssrProduct.image),
+        category: ssrProduct.category || { name: 'N/A', slug: 'na' },
+        reviews: ssrProduct.reviews?.map((review: any) => ({
+          ...review,
+          user: {
+            ...review.user,
+            name: review.user?.name || 'Anonymous User'
+          }
+        })) || [],
+        reviewCount: ssrProduct.reviews?.length || 0,
+        rating: ssrProduct.reviews?.length > 0 
+          ? ssrProduct.reviews.reduce((acc: number, review: any) => acc + review.rating, 0) / ssrProduct.reviews.length
+          : 0,
+        features: ssrProduct.features || [
+          'Thiết kế hiện đại và sang trọng',
+          'Chất lượng cao, độ bền tốt',
+          'Công nghệ tiên tiến',
+          'Dễ dàng sử dụng',
+          'Bảo hành chính hãng'
+        ],
+        specifications: ssrProduct.specifications || {
+          'Thương hiệu': ssrProduct.brand || 'N/A',
+          'Danh mục': ssrProduct.category?.name || 'N/A',
+          'Trọng lượng': ssrProduct.weight ? `${ssrProduct.weight}g` : 'N/A',
+          'Kích thước': ssrProduct.dimensions || 'N/A',
+          'Mã sản phẩm (SKU)': ssrProduct.sku || 'N/A',
+          'Tình trạng': (ssrProduct.stock || 0) > 0 ? 'Còn hàng' : 'Hết hàng',
+          'Số lượng trong kho': ssrProduct.stock ? `${ssrProduct.stock} sản phẩm` : 'N/A'
+        },
+        metaTitle: ssrProduct.meta_title || `${ssrProduct.name} | ECom`,
+        metaDescription: ssrProduct.meta_description || 
+          `Mua ${ssrProduct.name} với giá tốt nhất. ${ssrProduct.description || ''}`.slice(0, 160),
+        metaKeywords: ssrProduct.meta_keywords || 
+          `${ssrProduct.name}, ${ssrProduct.category?.name || ''}, ${ssrProduct.brand || ''}, mua online`.toLowerCase(),
+        createdAt: ssrProduct.createAt,
+        updatedAt: ssrProduct.updateAt,
+        fullDescription: ssrProduct.fullDescription || ssrProduct.description
+      };
+      setProduct(transformedProduct);
+      setLoading(false);
+      return;
+    }
+    
     const fetchProduct = async () => {
       if (!slug) return;
       try {
@@ -494,23 +545,83 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
     );
   }
 
-  const productSeo : Product | any = useLoaderData()
+  // Get product data for SEO from loader or current product state
+  const productSeo = product;
+  const pageUrl = getPageUrl();
+  const productImageUrl = getFullimageUrl(productSeo.image);
+  const productTitle = productSeo.metaTitle || `${productSeo.name} | ECom Store`;
+  const productDescription = productSeo.metaDescription || `Mua ${productSeo.name} với giá tốt nhất. ${productSeo.description || ''}`.slice(0, 160);
 
   return (
-    <>{
-      product  && (
-        <Helmet>
-          <title>{productSeo.meta_title || `${productSeo.name} | ECom Store`}</title>
-          <meta name="description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />
-          <meta property='og:type' content='product'/>
-          <meta property="og:title" content={productSeo.meta_title || `${productSeo.name} | ECom Store`} />
-          <meta property="og:description" content={productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất.`} />
-          <meta property="og:image" content={getFullimageUrl(productSeo.image)} />
-          <meta property="og:url" content={getPageUrl()} />
-
-        </Helmet>
-      )
-    }
+    <>
+      <Helmet>
+        {/* Basic SEO */}
+        <title>{productTitle}</title>
+        <meta name="description" content={productDescription} />
+        <meta name="keywords" content={productSeo.metaKeywords || `${productSeo.name}, ${typeof productSeo.category === 'object' ? productSeo.category?.name : productSeo.category || ''}, ${productSeo.brand || ''}, mua online`.toLowerCase()} />
+        <link rel="canonical" href={pageUrl} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="product" />
+        <meta property="og:title" content={productTitle} />
+        <meta property="og:description" content={productDescription} />
+        <meta property="og:image" content={productImageUrl} />
+        <meta property="og:image:width" content="800" />
+        <meta property="og:image:height" content="600" />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:site_name" content="ECom Store" />
+        <meta property="og:locale" content="vi_VN" />
+        
+        {/* Facebook Product specific */}
+        <meta property="product:brand" content={productSeo.brand || 'ECom Store'} />
+        <meta property="product:availability" content={(productSeo.stock || 0) > 0 ? 'in stock' : 'out of stock'} />
+        <meta property="product:condition" content="new" />
+        <meta property="product:price:amount" content={String(productSeo.salePrice || productSeo.price)} />
+        <meta property="product:price:currency" content="VND" />
+        <meta property="product:retailer_item_id" content={String(productSeo.id)} />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={productTitle} />
+        <meta name="twitter:description" content={productDescription} />
+        <meta name="twitter:image" content={productImageUrl} />
+        
+        {/* Additional SEO */}
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="ECom Store" />
+        <meta name="revisit-after" content="7 days" />
+        
+        {/* Schema.org JSON-LD */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            "name": productSeo.name,
+            "image": productImageUrl,
+            "description": productSeo.description,
+            "sku": productSeo.sku || productSeo.id,
+            "brand": {
+              "@type": "Brand",
+              "name": productSeo.brand || "ECom Store"
+            },
+            "category": typeof productSeo.category === 'object' ? productSeo.category?.name : productSeo.category || "General",
+            "offers": {
+              "@type": "Offer",
+              "url": pageUrl,
+              "priceCurrency": "VND",
+              "price": productSeo.salePrice || productSeo.price,
+              "priceValidUntil": new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+              "availability": (productSeo.stock || 0) > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+              "itemCondition": "https://schema.org/NewCondition"
+            },
+            "aggregateRating": (productSeo.rating || 0) > 0 ? {
+              "@type": "AggregateRating",
+              "ratingValue": productSeo.rating,
+              "reviewCount": productSeo.reviewCount || 0
+            } : undefined
+          })}
+        </script>
+      </Helmet>
       <Container maxWidth="lg" sx={{ py: 4 }}>
         {/* Breadcrumbs */}
         <Breadcrumbs sx={{ mb: 3 }}>
@@ -682,11 +793,14 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ pageProps }) => {
 
             {/* Share Buttons */}
             <Paper sx={{ p: 2, mb: 3 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
                 <Typography variant="subtitle2">
                   Chia sẻ sản phẩm này:
                 </Typography>
-                <FacebookShareButton url={getPageUrl()} hashtag="#EComStore">
+                <FacebookShareButton 
+                  url={pageUrl} 
+                  hashtag="#EComStore"
+                >
                   <FacebookIcon size={40} round />
                 </FacebookShareButton>
               </Box>

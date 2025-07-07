@@ -33,13 +33,25 @@ async function createServer() {
 
       let template, render;
 
-     
       template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
       render = (await import('./dist/server/entry-server.js')).render;
 
-      
+      // Check if this is a product page for SEO
+      let productSeo = null;
+      const productMatch = url.match(/^\/products\/([^\/]+)$/);
+      if (productMatch) {
+        const slug = productMatch[1];
+        try {
+          const response = await axios.get(`${process.env.VITE_BACKEND_URL || 'https://be-ecom-2hfk.onrender.com'}/api/v1/products/slug/${slug}`);
+          if (response && response.statusCode === 200) {
+            productSeo = response.data;
+          }
+        } catch (error) {
+          console.error('Error fetching product for SEO:', error.message);
+        }
+      }
 
-      const { html: appHtml, helmetContext } = await render(url);
+      const { html: appHtml, helmetContext } = await render(url, productSeo);
       const { helmet } = helmetContext;
 
       const head = helmet ? `
