@@ -43,8 +43,8 @@ async function createServer() {
         <meta property="og:url" content="https://fe-ecom-2hfk.onrender.com${url}">
       `;
 
-      if (url.startsWith('/product/')) {
-        const slug = url.split('/product/')[1];
+      if (url.startsWith('/products/')) {
+        const slug = url.split('/products/')[1];
         const response = await axios.get(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`);
         const product = response?.data;
         if (product) {
