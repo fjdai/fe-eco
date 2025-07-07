@@ -41,13 +41,19 @@ async function createServer() {
       const productMatch = url.match(/^\/products\/([^\/]+)$/);
       if (productMatch) {
         const slug = productMatch[1];
+        console.log(`🔍 Fetching product for slug: ${slug}`);
         try {
-          const response = await axios.get(`${process.env.VITE_BACKEND_URL || 'https://be-ecom-2hfk.onrender.com'}/api/v1/products/slug/${slug}`);
-          if (response && response.data && response.data.statusCode === 200) {
-            productSeo = response.data.data;
+          const apiUrl = `${process.env.VITE_BACKEND_URL || 'https://be-ecom-2hfk.onrender.com'}/api/v1/products/slug/${slug}`;
+          console.log(`📡 API URL: ${apiUrl}`);
+          const response = await axios.get(apiUrl);
+          if (response && response.statusCode === 200) {
+            productSeo = response.data;
+            console.log(`✅ Product fetched successfully: ${productSeo.name}`);
+          } else {
+            console.log(`❌ Product not found or invalid response`);
           }
         } catch (error) {
-          console.error('Error fetching product for SEO:', error.message);
+          console.error('❌ Error fetching product for SEO:', error.message);
         }
       }
 
@@ -57,84 +63,72 @@ async function createServer() {
       // Generate comprehensive meta tags
       let metaTags = '';
       if (productSeo) {
+        const slug = productMatch[1];
         const productTitle = productSeo.meta_title || `${productSeo.name} | ECom Store`;
-        const productDescription = productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất. ${productSeo.description || ''}`.slice(0, 160);
+        const productDescription = (productSeo.meta_description || `Mua ${productSeo.name} với giá tốt nhất. ${productSeo.description || ''}`).slice(0, 160);
         const productImage = `${process.env.VITE_BACKEND_URL || 'https://be-ecom-2hfk.onrender.com'}${productSeo.image || '/images/placeholder.jpg'}`;
         const productUrl = `https://fe-eco.onrender.com/products/${slug}`;
-        
-        metaTags = `
-          <title>${productTitle}</title>
-          <meta name="description" content="${productDescription}" />
-          <meta name="keywords" content="${productSeo.meta_keywords || `${productSeo.name}, ${productSeo.category?.name || ''}, ${productSeo.brand || ''}, mua online`.toLowerCase()}" />
-          <link rel="canonical" href="${productUrl}" />
-          
-          <!-- Open Graph / Facebook -->
-          <meta property="og:type" content="product" />
-          <meta property="og:title" content="${productTitle}" />
-          <meta property="og:description" content="${productDescription}" />
-          <meta property="og:image" content="${productImage}" />
-          <meta property="og:image:width" content="800" />
-          <meta property="og:image:height" content="600" />
-          <meta property="og:url" content="${productUrl}" />
-          <meta property="og:site_name" content="ECom Store" />
-          <meta property="og:locale" content="vi_VN" />
-          
-          <!-- Facebook Product specific -->
-          <meta property="product:brand" content="${productSeo.brand || 'ECom Store'}" />
-          <meta property="product:availability" content="${(productSeo.stock || 0) > 0 ? 'in stock' : 'out of stock'}" />
-          <meta property="product:condition" content="new" />
-          <meta property="product:price:amount" content="${productSeo.sale_price || productSeo.price}" />
-          <meta property="product:price:currency" content="VND" />
-          <meta property="product:retailer_item_id" content="${productSeo.id}" />
-          <meta property="product:category" content="${productSeo.category?.name || 'General'}" />
-          
-          <!-- Additional Facebook Commerce -->
-          <meta property="ia:markup_url" content="${productUrl}" />
-          <meta property="ia:markup_url_dev" content="${productUrl}" />
-          
-          <!-- Twitter Card -->
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="${productTitle}" />
-          <meta name="twitter:description" content="${productDescription}" />
-          <meta name="twitter:image" content="${productImage}" />
-          
-          <!-- Additional SEO -->
-          <meta name="robots" content="index, follow" />
-          <meta name="author" content="ECom Store" />
-          <meta name="revisit-after" content="7 days" />
-          <meta name="rating" content="general" />
-          <meta name="distribution" content="global" />
-          
-          <!-- Schema.org JSON-LD -->
-          <script type="application/ld+json">
-          {
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": "${productSeo.name}",
-            "image": ["${productImage}"],
-            "description": "${productSeo.description || ''}",
-            "sku": "${productSeo.sku || productSeo.id}",
-            "brand": {
-              "@type": "Brand",
-              "name": "${productSeo.brand || 'ECom Store'}"
-            },
-            "category": "${productSeo.category?.name || 'General'}",
-            "offers": {
-              "@type": "Offer",
-              "url": "${productUrl}",
-              "priceCurrency": "VND",
-              "price": "${productSeo.sale_price || productSeo.price}",
-              "priceValidUntil": "${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
-              "availability": "${(productSeo.stock || 0) > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'}",
-              "itemCondition": "https://schema.org/NewCondition",
-              "seller": {
-                "@type": "Organization",
-                "name": "ECom Store"
-              }
+        console.log(`🏷️ Generating meta tags for: ${productTitle}`);
+        const jsonLd = {
+          "@context": "https://schema.org/",
+          "@type": "Product",
+          "name": productSeo.name,
+          "image": [productImage],
+          "description": (productSeo.description || ''),
+          "sku": productSeo.sku || productSeo.id,
+          "brand": {
+            "@type": "Brand",
+            "name": productSeo.brand || 'ECom Store'
+          },
+          "category": productSeo.category?.name || 'General',
+          "offers": {
+            "@type": "Offer",
+            "url": productUrl,
+            "priceCurrency": "VND",
+            "price": productSeo.sale_price || productSeo.price,
+            "priceValidUntil": new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            "availability": (productSeo.stock || 0) > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+            "itemCondition": "https://schema.org/NewCondition",
+            "seller": {
+              "@type": "Organization",
+              "name": "ECom Store"
             }
           }
-          </script>
-        `;
+        };
+        metaTags = [
+          `<title>${productTitle}</title>`,
+          `<meta name="description" content="${productDescription}" />`,
+          `<meta name="keywords" content="${productSeo.meta_keywords || `${productSeo.name}, ${productSeo.category?.name || ''}, ${productSeo.brand || ''}, mua online`.toLowerCase()}" />`,
+          `<link rel="canonical" href="${productUrl}" />`,
+          `<meta property="og:type" content="product" />`,
+          `<meta property="og:title" content="${productTitle}" />`,
+          `<meta property="og:description" content="${productDescription}" />`,
+          `<meta property="og:image" content="${productImage}" />`,
+          `<meta property="og:image:width" content="800" />`,
+          `<meta property="og:image:height" content="600" />`,
+          `<meta property="og:url" content="${productUrl}" />`,
+          `<meta property="og:site_name" content="ECom Store" />`,
+          `<meta property="og:locale" content="vi_VN" />`,
+          `<meta property="product:brand" content="${productSeo.brand || 'ECom Store'}" />`,
+          `<meta property="product:availability" content="${(productSeo.stock || 0) > 0 ? 'in stock' : 'out of stock'}" />`,
+          `<meta property="product:condition" content="new" />`,
+          `<meta property="product:price:amount" content="${productSeo.sale_price || productSeo.price}" />`,
+          `<meta property="product:price:currency" content="VND" />`,
+          `<meta property="product:retailer_item_id" content="${productSeo.id}" />`,
+          `<meta property="product:category" content="${productSeo.category?.name || 'General'}" />`,
+          `<meta property="ia:markup_url" content="${productUrl}" />`,
+          `<meta property="ia:markup_url_dev" content="${productUrl}" />`,
+          `<meta name="twitter:card" content="summary_large_image" />`,
+          `<meta name="twitter:title" content="${productTitle}" />`,
+          `<meta name="twitter:description" content="${productDescription}" />`,
+          `<meta name="twitter:image" content="${productImage}" />`,
+          `<meta name="robots" content="index, follow" />`,
+          `<meta name="author" content="ECom Store" />`,
+          `<meta name="revisit-after" content="7 days" />`,
+          `<meta name="rating" content="general" />`,
+          `<meta name="distribution" content="global" />`,
+          `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`
+        ].join('\n');
       }
 
       const head = helmet && helmet.title ? `

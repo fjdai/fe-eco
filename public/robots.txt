@@ -1,6 +1,23 @@
 User-agent: *
 Allow: /
 
+# Allow Facebook External Hit specifically
+User-agent: facebookexternalhit
+Allow: /
+Allow: /products/
+Allow: /categories/
+
+# Allow other social media crawlers
+User-agent: Twitterbot
+Allow: /
+Allow: /products/
+Allow: /categories/
+
+User-agent: LinkedInBot
+Allow: /
+Allow: /products/
+Allow: /categories/
+
 # Disallow admin and private areas
 Disallow: /admin/
 Disallow: /api/
@@ -16,7 +33,7 @@ Allow: /about/
 Allow: /contact/
 
 # Sitemap location
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://fe-eco.onrender.com/sitemap.xml
 
 # Crawl delay (optional)
 Crawl-delay: 1
