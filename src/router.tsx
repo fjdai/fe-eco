@@ -19,7 +19,7 @@ import PaymentCancel from "./pages/payment/PaymentCancel";
 import MyOrdersPage from "./pages/orders/MyOrdersPage";
 import OrderDetailPage from "./pages/orders/OrderDetailPage";
 import ProfilePage from "./pages/profile/ProfilePage";
-import ProductDetailPage from "./pages/products/detailproduct";
+import ProductDetailPage from "./pages/products/detailproduct-new";
 import ProductsPage from "./pages/products/productspage";
 import Layout from './components/layout/EComLayout';
 import { productDetailLoader } from './loaders/productDetailLoader';
@@ -127,8 +127,27 @@ export function createRouter() {
   return createBrowserRouter(routes);
 }
 
-export function createServerRouter(location: string) {
-  return createMemoryRouter(routes, {
+export function createServerRouter(location: string, productSeo: any = null) {
+  // Clone routes và inject productSeo cho product detail route
+  const serverRoutes = routes.map(route => {
+    if (route.path === '/') {
+      return {
+        ...route,
+        children: route.children?.map(child => {
+          if (child.path === 'products/:slug') {
+            return {
+              ...child,
+              element: <ProductDetailPage pageProps={{ product: productSeo }} />
+            };
+          }
+          return child;
+        })
+      };
+    }
+    return route;
+  });
+
+  return createMemoryRouter(serverRoutes, {
     initialEntries: [location],
   });
 }

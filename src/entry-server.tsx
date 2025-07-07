@@ -5,7 +5,7 @@ import { AppProviders } from './AppServerProvider';
 
 export function render(url: string, productSeo: any = null) {
   const helmetContext = { };
-  const router = createServerRouter(url);
+  const router = createServerRouter(url, productSeo);
   
   const html = ReactDOMServer.renderToString(
     <AppProviders helmetContext={helmetContext} product={productSeo}>
