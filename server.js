@@ -42,6 +42,7 @@ async function createServer() {
       template = fs.readFileSync(resolve(__dirname, 'dist/client/index.html'), 'utf-8');
       render = (await import('./dist/server/entry-server.js')).render;
 
+<<<<<<< HEAD
       // Check if this is a product page for SEO
       let productSeo = null;
       const productMatch = url.match(/^\/products\/([^\/]+)$/);
@@ -65,6 +66,23 @@ async function createServer() {
           console.error('❌ Error fetching product for SEO:', error.message);
         }
       }
+=======
+      let productMeta = {}
+      if (url.startsWith('/product/')) {
+        const slug = url.split('/product/')[1]
+        const response = await fetch(`https://be-ecom-2hfk.onrender.com/api/products/slug/${slug}`)
+        if(response?.statusCode === 200) {
+          const product = response.data;
+          productMeta = {
+            title: product.meta_title,
+            description: product.meta_description,
+            image: `https://fe-ecom-2hfk.onrender.com/images/${product.image}`,
+            url: `https://fe-ecom-2hfk.onrender.com/product/${product.slug}`
+          };
+        }
+      }
+
+>>>>>>> 6b85c0180c727af4632e4f4238230ffe33eacd23
 
       const { html: appHtml, helmetContext } = await render(url, productSeo);
       const { helmet } = helmetContext;
@@ -155,7 +173,11 @@ async function createServer() {
 
       const finalHtml = template
         .replace('<!--app-head-->', head)
-        .replace('<!--app-html-->', appHtml);
+        .replace('<!--app-html-->', appHtml)
+        .replace('<!--ssr-meta-title-->', productMeta.title || '')
+        .replace('<!--ssr-meta-description-->', productMeta.description || '')
+        .replace('<!--ssr-meta-image-->', productMeta.image || '')
+        .replace('<!--ssr-meta-url-->', productMeta.url || '');
 
       // Set appropriate headers for Facebook crawler
       const headers = {
