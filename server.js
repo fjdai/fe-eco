@@ -46,7 +46,7 @@ async function createServer() {
       if (url.startsWith('/products/')) {
         const slug = url.split('/products/')[1];
         const response = await axios.get(`https://be-ecom-2hfk.onrender.com/api/v1/products/slug/${slug}`);
-        const product = response?.data;
+        const product = response?.data?.data;
         if (product) {
           console.log('Product found:', JSON.stringify(product));
           console.log('Product meta title:', product.meta_title);
@@ -57,7 +57,7 @@ async function createServer() {
             <title>${product.meta_title}</title>
             <meta property="og:title" content="${product.meta_title}">
             <meta property="og:description" content="${product.meta_description}">
-            <meta property="og:image" content="https://be-ecom-2hfk.onrender.com/images/${product.image[0]}">
+            <meta property="og:image" content="https://be-ecom-2hfk.onrender.com/images/${product.images[0]}">
             <meta property="og:url" content="https://fe-ecom-2hfk.onrender.com/product/${product.slug}">
           `;
         }
