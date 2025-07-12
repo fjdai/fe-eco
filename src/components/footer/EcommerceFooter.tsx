@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
     Box,
     Container,
@@ -6,12 +5,11 @@ import {
     Typography,
     Link,
     IconButton,
-    TextField,
     Button,
     List,
     ListItem,
     ListItemText,
-    Paper
+    Modal,
 } from '@mui/material';
 import {
     Facebook,
@@ -23,25 +21,18 @@ import {
     Email,
     Phone,
     LocationOn,
-    Send,
     Security,
     LocalShipping,
     Support,
     Verified
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import MailchimpForm from '../MailChimp/MailchimpForm';
 
 const EcommerceFooter = () => {
+    const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-
-    const handleNewsletterSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        // Handle newsletter subscription
-        console.log('Newsletter subscription:', email);
-        setEmail('');
-    };
-
     const footerSections = [
         {
             title: 'Về chúng tôi',
@@ -277,66 +268,32 @@ const EcommerceFooter = () => {
 
                     {/* Newsletter Signup */}
                     <Grid item xs={12} md={4}>
-                        <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: '#3498db' }}>
-                            Đăng ký nhận tin
-                        </Typography>
-                        <Typography variant="body2" sx={{ mb: 3, opacity: 0.8 }}>
-                            Nhận thông tin về sản phẩm mới, khuyến mãi đặc biệt và nhiều ưu đãi hấp dẫn khác.
-                        </Typography>
-                        
-                        <Paper
-                            component="form"
-                            onSubmit={handleNewsletterSubmit}
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                backdropFilter: 'blur(10px)',
-                                borderRadius: 2,
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                overflow: 'hidden',
-                                mb: 3
-                            }}
+                        <Button 
+                        variant="outlined" 
+                        onClick={() => setOpen(true)}
+                        sx={{ mt: 2 }}
+                    >
+                        Đăng ký nhận tin
+                    </Button>
+
+                    {/* Popup Modal */}
+                    <Modal open={open} onClose={() => setOpen(false)}>
+                        <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 400,
+                            bgcolor: 'background.paper',
+                            borderRadius: 2,
+                            boxShadow: 24,
+                            p: 4,
+                        }}
                         >
-                            <TextField
-                                variant="standard"
-                                placeholder="Email của bạn"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                sx={{
-                                    flex: 1,
-                                    px: 2,
-                                    '& .MuiInput-root': {
-                                        color: 'white',
-                                        '&:before': { borderBottom: 'none' },
-                                        '&:after': { borderBottom: 'none' },
-                                        '&:hover:before': { borderBottom: 'none' }
-                                    },
-                                    '& .MuiInput-input::placeholder': {
-                                        color: 'rgba(255,255,255,0.7)',
-                                        opacity: 1
-                                    }
-                                }}
-                                InputProps={{
-                                    disableUnderline: true,
-                                    style: { color: 'white' }
-                                }}
-                            />
-                            <IconButton
-                                type="submit"
-                                sx={{
-                                    backgroundColor: '#3498db',
-                                    color: 'white',
-                                    borderRadius: 0,
-                                    px: 2,
-                                    '&:hover': {
-                                        backgroundColor: '#2980b9'
-                                    }
-                                }}
-                            >
-                                <Send />
-                            </IconButton>
-                        </Paper>
+                        <MailchimpForm />
+                        </Box>
+                    </Modal>
 
                         {/* Download App */}
                         <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: '#3498db' }}>

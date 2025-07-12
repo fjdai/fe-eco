@@ -9,7 +9,6 @@ import LayoutManagement from "./components/layoutManagement";
 import AdminDashboard from "./pages/admin";
 import NewCartPage from "./pages/cart/NewCartPage";
 import CheckoutPage from "./pages/cart/CheckoutPage";
-import EmailMarketingAdmin from "./pages/admin/EmailMarketingAdmin";
 import AdminCategories from "./pages/admin/categories";
 import AdminProducts from "./pages/admin/products";
 import SearchPage from "./pages/search/SearchPage";
@@ -22,6 +21,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import ProductDetailPage from "./pages/products/detailproduct";
 import ProductsPage from "./pages/products/productspage";
 import Layout from './components/layout/EComLayout';
+import EmailMarketingAdmin from './pages/admin/EmailMarketingAdmin';
 
 
 const routes = [

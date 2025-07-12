@@ -8,7 +8,6 @@ import axios from 'axios';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const isProduction = true;
 
 async function createServer() {
   const app = express();
@@ -56,7 +55,6 @@ async function createServer() {
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml);
     } catch (e) {
-      if (!isProduction) vite.ssrFixStacktrace(e);
       console.error(e);
       res.status(500).end(e.stack);
     }

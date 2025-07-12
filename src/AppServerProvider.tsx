@@ -179,7 +179,7 @@ const theme = createTheme({
   }
 });
 
-export function AppProviders({ children, helmetContext }: PropsWithChildren   & { helmetContext?: any, product?: any }) {
+export function AppProviders({ children }: PropsWithChildren ) {
   return (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
