@@ -62,10 +62,7 @@ const EmailMarketingAdmin: React.FC = () => {
 
   // Export dialog
   const [exportDialog, setExportDialog] = useState(false);
-  const [exportOptions, setExportOptions] = useState({
-    format: 'csv' as 'csv' | 'json',
-    includeUsers: true
-  });
+  
 
   useEffect(() => {
     fetchSubscribers();
@@ -109,126 +106,36 @@ const EmailMarketingAdmin: React.FC = () => {
     }
   };
 
-  const handleExportEmails = async () => {
-    try {
-      const response = await fetch(`/api/newsletter/export-emails?format=${exportOptions.format}&includeUsers=${exportOptions.includeUsers}`, {
-        headers: {
-          'Authorization': typeof window !== 'undefined' && localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
-        }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        
-        if (exportOptions.format === 'csv') {
-          // Download CSV
-          const blob = new Blob([data.data], { type: 'text/csv' });
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.style.display = 'none';
-          a.href = url;
-          a.download = `email_list_${new Date().getTime()}.csv`;
-          document.body.appendChild(a);
-          a.click();
-          window.URL.revokeObjectURL(url);
-        } else {
-          // Download JSON
-          const blob = new Blob([JSON.stringify(data.data, null, 2)], { type: 'application/json' });
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.style.display = 'none';
-          a.href = url;
-          a.download = `email_list_${new Date().getTime()}.json`;
-          document.body.appendChild(a);
-          a.click();
-          window.URL.revokeObjectURL(url);
-        }
-        
-        setExportDialog(false);
+const handleExportEmails = async () => {
+  try {
+    const response = await fetch('https://be-ecom-2hfk.onrender.com/api/v1/admin/users/export-email', {
+      headers: {
+        'Authorization': typeof window !== 'undefined' && localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
       }
-    } catch (error) {
-      console.error('Export failed:', error);
+    });
+    if (response.ok) {
+      const text = await response.text();
+      // Thêm BOM để Excel nhận diện UTF-8
+      const bom = '\uFEFF';
+      const blob = new Blob([bom + text], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `email_list_${Date.now()}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setExportDialog(false);
+    } else {
+      console.error('Export failed: Invalid status code', response.status);
     }
-  };
+  } catch (error) {
+    console.error('Export failed:', error);
+  }
+};
 
-  const handleSendCampaign = async () => {
-    if (!emailCampaign.subject || !emailCampaign.content) {
-      alert('Please fill in subject and content');
-      return;
-    }
 
-    setLoading(true);
-    try {
-      const response = await fetch('/api/v1/newsletter/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': typeof window !== 'undefined' && localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
-        },
-        body: JSON.stringify({
-          subject: emailCampaign.subject,
-          content: emailCampaign.content,
-          includeUsers: emailCampaign.includeUsers,
-          recipients: emailCampaign.recipients.length > 0 ? emailCampaign.recipients : undefined
-        })
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        alert(`Campaign sent successfully! Sent: ${result.sent}, Failed: ${result.failed}`);
-        setCampaignDialog(false);
-        setEmailCampaign({
-          subject: '',
-          content: '',
-          includeUsers: true,
-          recipients: []
-        });
-      } else {
-        alert('Failed to send campaign');
-      }
-    } catch (error) {
-      console.error('Campaign send failed:', error);
-      alert('Failed to send campaign');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Sample email content for demo
-  const sampleEmailContent = `
-    <h2>🎉 Special Offer Just for You!</h2>
-    
-    <p>Dear Valued Customer,</p>
-    
-    <p>We're excited to share our latest products and exclusive deals with you!</p>
-    
-    <h3>🔥 Featured Products:</h3>
-    <ul>
-      <li><strong>iPhone 15 Pro</strong> - Now $899.99 (was $999.99)</li>
-      <li><strong>MacBook Pro 14"</strong> - Special price $1,799.99</li>
-      <li><strong>Samsung Galaxy S24</strong> - Limited time offer $799.99</li>
-    </ul>
-    
-    <h3>💡 Why Choose Our E-commerce Platform?</h3>
-    <p>✅ Multiple payment methods (VNPay, PayPal)<br/>
-    ✅ Live chat support with Facebook Messenger integration<br/>
-    ✅ SEO-optimized product pages<br/>
-    ✅ Secure checkout process<br/>
-    ✅ Fast shipping worldwide</p>
-    
-    <p><a href="${window.location.origin}/products" style="background: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px;">Shop Now 🛒</a></p>
-    
-    <p>Thank you for being part of our community!</p>
-    
-    <p>Best regards,<br/>
-    The E-commerce Team</p>
-    
-    <hr/>
-    <p style="font-size: 12px; color: #666;">
-    This email was sent to newsletter subscribers and registered users who opted in for marketing communications.
-    <br/>Contact: agilehcmue@gmail.com
-    </p>
-  `;
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -417,14 +324,6 @@ const EmailMarketingAdmin: React.FC = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button
-                variant="outlined"
-                onClick={() => setEmailCampaign(prev => ({ ...prev, content: sampleEmailContent }))}
-              >
-                Use Sample Content
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -439,9 +338,6 @@ const EmailMarketingAdmin: React.FC = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setCampaignDialog(false)}>Cancel</Button>
-          <Button onClick={handleSendCampaign} variant="contained" disabled={loading}>
-            {loading ? 'Sending...' : 'Send Campaign'}
-          </Button>
         </DialogActions>
       </Dialog>
 
@@ -452,35 +348,8 @@ const EmailMarketingAdmin: React.FC = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="body2" color="text.secondary" paragraph>
-                Export email addresses for external marketing tools like MailChimp, Mailjet, or GetResponse.
+                Export email addresses.
               </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={exportOptions.includeUsers}
-                    onChange={(e) => setExportOptions(prev => ({ ...prev, includeUsers: e.target.checked }))}
-                  />
-                }
-                label="Include registered users"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body2">Format:</Typography>
-              <Button
-                variant={exportOptions.format === 'csv' ? 'contained' : 'outlined'}
-                onClick={() => setExportOptions(prev => ({ ...prev, format: 'csv' }))}
-                sx={{ mr: 1 }}
-              >
-                CSV
-              </Button>
-              <Button
-                variant={exportOptions.format === 'json' ? 'contained' : 'outlined'}
-                onClick={() => setExportOptions(prev => ({ ...prev, format: 'json' }))}
-              >
-                JSON
-              </Button>
             </Grid>
           </Grid>
         </DialogContent>

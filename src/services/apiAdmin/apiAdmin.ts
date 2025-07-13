@@ -77,3 +77,5 @@ export const callGetTopProducts = (params?: { limit?: number; period?: string })
 export const callGetRecentActivities = (params?: { limit?: number }) => {
     return axios.get('/api/v1/admin/activities', { params });
 };
+
+
