@@ -43,24 +43,22 @@ const PaymentSuccess: React.FC = () => {
           // Handle VNPay return
           const queryParams = Object.fromEntries(searchParams.entries());
           const result = await paymentService.handleVNPayReturn(new URLSearchParams(queryParams));
-          console.log('VNPay return result:', result);
           
-          if(result && result.status === 'success') {
+          if(result && result.data && result.data.status === 'success') {
             setPaymentResult({
               ...result.data,
               method: 'VNPay',
               transaction_id: result.transaction_id || result.data.order_number,
               order_number: result.order_number
             });
-                    // Clear cart after successful payment
-            try {
-              if (typeof window !== 'undefined') localStorage.removeItem('cart');
-              localStorage.removeItem('cart');
-              await axios.delete('/api/v1/cart/clear');
-              dispatch(clearCart()); // Clear Redux store
-            } catch (cartError) {
-              console.error('Error clearing cart on server:', cartError);
-            }
+              try {
+                if (typeof window !== 'undefined') localStorage.removeItem('cart');
+                localStorage.removeItem('cart');
+                await axios.delete('/api/v1/cart/clear');
+                dispatch(clearCart()); // Clear Redux store
+              } catch (cartError) {
+                console.error('Error clearing cart on server:', cartError);
+              }
           }
           else{
             window.location.href = '/payment/cancel';
@@ -97,14 +95,14 @@ const PaymentSuccess: React.FC = () => {
 
 
                   // Clear cart after successful payment
-        try {
-          if (typeof window !== 'undefined') localStorage.removeItem('cart');
-          localStorage.removeItem('cart');
-          await axios.delete('/api/v1/cart/clear');
-          dispatch(clearCart()); // Clear Redux store
-        } catch (cartError) {
-          console.error('Error clearing cart on server:', cartError);
-        }
+              try {
+                if (typeof window !== 'undefined') localStorage.removeItem('cart');
+                localStorage.removeItem('cart');
+                await axios.delete('/api/v1/cart/clear');
+                dispatch(clearCart()); // Clear Redux store
+              } catch (cartError) {
+                console.error('Error clearing cart on server:', cartError);
+              }
         } else {
           throw new Error('Phương thức thanh toán không được hỗ trợ');
         }
