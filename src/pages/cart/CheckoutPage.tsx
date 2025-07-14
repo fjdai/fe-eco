@@ -220,8 +220,6 @@ const CheckoutPage: React.FC = () => {
         locale: 'vn'
       });
 
-      console.log('VNPay payment result:', paymentResult);
-
 
       if (paymentResult && paymentResult.data && paymentResult.data.paymentUrl) {
         // Redirect to VNPay

@@ -44,8 +44,19 @@ const PaymentSuccess: React.FC = () => {
           const queryParams = Object.fromEntries(searchParams.entries());
           const result = await paymentService.handleVNPayReturn(new URLSearchParams(queryParams));
           
-          console.log('VNPay return result:', result);
+          if(result && result.status === 'success') {
+            setPaymentResult({
+              ...result.data,
+              method: 'VNPay',
+              transaction_id: result.transaction_id || result.data.order_number,
+              order_number: result.order_number
+            });
+          }
+          else{
+            window.location.href = '/cancel';
+          }
 
+          
           
         } else if (paymentMethod === 'paypal') {
           // Handle PayPal return
