@@ -51,13 +51,22 @@ const PaymentSuccess: React.FC = () => {
               transaction_id: result.transaction_id || result.data.order_number,
               order_number: result.order_number
             });
-          }
-          else{
-            window.location.href = '/cancel';
-          }
 
+                    // Clear cart after successful payment
+            try {
+              if (typeof window !== 'undefined') localStorage.removeItem('cart');
+              localStorage.removeItem('cart');
+              await axios.delete('/api/v1/cart/clear');
+              dispatch(clearCart()); // Clear Redux store
+            } catch (cartError) {
+              console.error('Error clearing cart on server:', cartError);
+            }
+          }
           
-          
+
+          else{
+            window.location.href = '/payment/cancel';
+          }
         } else if (paymentMethod === 'paypal') {
           // Handle PayPal return
           const paymentId = searchParams.get('paymentId');
@@ -87,11 +96,9 @@ const PaymentSuccess: React.FC = () => {
             transaction_id: paymentId,
             order_number: result.data?.order_number || orderId
           });
-        } else {
-          throw new Error('Phương thức thanh toán không được hỗ trợ');
-        }
 
-        // Clear cart after successful payment
+
+                  // Clear cart after successful payment
         try {
           if (typeof window !== 'undefined') localStorage.removeItem('cart');
           localStorage.removeItem('cart');
@@ -100,6 +107,11 @@ const PaymentSuccess: React.FC = () => {
         } catch (cartError) {
           console.error('Error clearing cart on server:', cartError);
         }
+        } else {
+          throw new Error('Phương thức thanh toán không được hỗ trợ');
+        }
+
+
 
       } catch (err: any) {
         setError(err.message || 'Có lỗi xảy ra khi xử lý thanh toán');
