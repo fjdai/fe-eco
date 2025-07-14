@@ -220,9 +220,10 @@ const CheckoutPage: React.FC = () => {
         locale: 'vn'
       });
 
-      if (paymentResult.payment_url) {
+
+      if (paymentResult && paymentResult.data && paymentResult.data.paymentUrl) {
         // Redirect to VNPay
-        window.location.href = paymentResult.payment_url;
+        window.location.href = paymentResult.data.paymentUrl;
       } else {
         throw new Error('Không nhận được URL thanh toán');
       }

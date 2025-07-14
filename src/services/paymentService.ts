@@ -32,6 +32,33 @@ export interface PayPalPaymentData {
   description?: string;
 }
 
+export interface PaymentResultVNPay {
+  statusCode: number;
+  message?: string;
+  data?: any;
+  author ?: string;
+}
+
+export interface PaymentData {
+  paymentUrl?: string;
+  vnp_Params?: vnpParams;
+}
+
+export interface vnpParams {
+  np_Version: string;
+  vnp_Command: string;
+  vnp_TmnCode: string;
+  vnp_Locale: string;
+  vnp_CurrCode: string;
+  vnp_TxnRef: string;
+  vnp_OrderInfo: string;
+  vnp_OrderType: string;
+  vnp_Amount: number;
+  vnp_IpAddr: string;
+  vnp_BankCode?: string;  
+}
+
+
 export interface PaymentResult {
   status: 'success' | 'failed';
   message: string;
@@ -40,6 +67,7 @@ export interface PaymentResult {
   payment_url?: string;
   approval_url?: string;
 }
+
 
 class PaymentService {
   // Order API
@@ -59,30 +87,19 @@ class PaymentService {
   }
 
   // VNPay Payment API
-  async createVNPayPayment(paymentData: VNPayPaymentData): Promise<PaymentResult> {
+  async createVNPayPayment(paymentData: VNPayPaymentData): Promise<PaymentResultVNPay | any> {
     try {
       const response = await axios.post('/api/v1/payments/vnpay/create', paymentData);
-      console.log('VNPay Payment Response:', response.data);
-      return {
-        status: 'success',
-        message: 'Tạo thanh toán VNPay thành công',
-        payment_url: response.data.payment_url,
-        transaction_id: response.data.transaction_id
-      };
+      return response;
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Lỗi khi tạo thanh toán VNPay');
     }
   }
 
-  async handleVNPayReturn(queryParams: URLSearchParams): Promise<PaymentResult> {
+  async handleVNPayReturn(queryParams: URLSearchParams): Promise<PaymentResultVNPay | any> {
     try {
       const response = await axios.get(`/api/v1/payments/vnpay/return?${queryParams.toString()}`);
-      return {
-        status: response.data.status === 'success' ? 'success' : 'failed',
-        message: response.data.message,
-        order_number: response.data.order_number,
-        transaction_id: queryParams.get('vnp_TransactionNo') || undefined
-      };
+      return response;
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Lỗi khi xác minh thanh toán VNPay');
     }
