@@ -62,6 +62,7 @@ class PaymentService {
   async createVNPayPayment(paymentData: VNPayPaymentData): Promise<PaymentResult> {
     try {
       const response = await axios.post('/api/v1/payments/vnpay/create', paymentData);
+      console.log('VNPay Payment Response:', response.data);
       return {
         status: 'success',
         message: 'Tạo thanh toán VNPay thành công',
@@ -84,15 +85,6 @@ class PaymentService {
       };
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Lỗi khi xác minh thanh toán VNPay');
-    }
-  }
-
-  async getVNPayBanks() {
-    try {
-      const response = await axios.get('/api/v1/payments/vnpay/banks');
-      return response.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Lỗi khi lấy danh sách ngân hàng');
     }
   }
 
