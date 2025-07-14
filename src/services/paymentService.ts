@@ -99,7 +99,8 @@ class PaymentService {
   async handleVNPayReturn(queryParams: URLSearchParams): Promise<PaymentResultVNPay | any> {
     try {
       const response = await axios.get(`/api/v1/payments/vnpay/return?${queryParams.toString()}`);
-      return response;
+      console.log('VNPay return response:', response.data);
+      return response.data;
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Lỗi khi xác minh thanh toán VNPay');
     }

@@ -24,6 +24,7 @@ import {
 } from '@mui/icons-material';
 import axios from '../../utils/axiosCustomize';
 import { clearCart } from '../../redux/cart/cartSlice';
+import paymentService from '../../services/paymentService';
 
 const PaymentSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -41,16 +42,11 @@ const PaymentSuccess: React.FC = () => {
         if (paymentMethod === 'vnpay') {
           // Handle VNPay return
           const queryParams = Object.fromEntries(searchParams.entries());
+          const result = await paymentService.handleVNPayReturn(new URLSearchParams(queryParams));
           
-          const result = await axios.get(`/api/v1/payments/vnpay/return?${searchParams.toString()}`);
-          
-          setPaymentResult({
-            ...result.data,
-            method: 'VNPay',
-            transaction_id: queryParams.vnp_TransactionNo,
-            order_number: queryParams.vnp_TxnRef?.split('_')[0]
-          });
+          console.log('VNPay return result:', result);
 
+          
         } else if (paymentMethod === 'paypal') {
           // Handle PayPal return
           const paymentId = searchParams.get('paymentId');

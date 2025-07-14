@@ -67,7 +67,8 @@ const VNPayPayment: React.FC<VNPayPaymentProps> = ({
           amount: amount, // VNPay sử dụng VND
           bank_code: selectedBank,
           description: `Thanh toán đơn hàng ${orderId}`,
-          locale: 'vn'
+          locale: 'vn',
+          
         })
       });
 
