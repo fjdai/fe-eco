@@ -43,6 +43,7 @@ const PaymentSuccess: React.FC = () => {
           // Handle VNPay return
           const queryParams = Object.fromEntries(searchParams.entries());
           const result = await paymentService.handleVNPayReturn(new URLSearchParams(queryParams));
+          console.log('VNPay return result:', result);
           
           if(result && result.status === 'success') {
             setPaymentResult({
@@ -51,7 +52,6 @@ const PaymentSuccess: React.FC = () => {
               transaction_id: result.transaction_id || result.data.order_number,
               order_number: result.order_number
             });
-
                     // Clear cart after successful payment
             try {
               if (typeof window !== 'undefined') localStorage.removeItem('cart');
@@ -62,8 +62,6 @@ const PaymentSuccess: React.FC = () => {
               console.error('Error clearing cart on server:', cartError);
             }
           }
-          
-
           else{
             window.location.href = '/payment/cancel';
           }
