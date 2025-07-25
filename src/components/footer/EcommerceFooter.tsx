@@ -148,7 +148,7 @@ const EcommerceFooter = () => {
             {/* Main Footer Content */}
             <Container maxWidth="lg" sx={{ py: 6 }}>
                 <Grid container spacing={4}>
-                    {/* Company Info */}
+                    {/* Company Info + More Text */}
                     <Grid item xs={12} md={4}>
                         <Box sx={{ mb: 3 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -157,13 +157,29 @@ const EcommerceFooter = () => {
                                     ECom
                                 </Typography>
                             </Box>
-                            <Typography variant="body1" sx={{ mb: 3, opacity: 0.9, lineHeight: 1.6 }}>
-                                Nền tảng mua sắm trực tuyến hàng đầu Việt Nam, mang đến trải nghiệm 
-                                mua sắm tuyệt vời với hàng triệu sản phẩm chất lượng cao.
+                            <Typography variant="body1" sx={{ mb: 2, opacity: 0.95, lineHeight: 1.7 }}>
+                                <b>Sứ mệnh:</b> ECom hướng tới việc trở thành nền tảng thương mại điện tử hàng đầu Việt Nam, giúp mọi người tiếp cận sản phẩm chất lượng với giá tốt nhất, đồng thời hỗ trợ các doanh nghiệp phát triển bền vững trên môi trường số.
                             </Typography>
-                            
+                            <Typography variant="body2" sx={{ mb: 2, opacity: 0.85, lineHeight: 1.6 }}>
+                                <b>Tầm nhìn:</b> Xây dựng cộng đồng mua sắm hiện đại, minh bạch, nơi khách hàng luôn là trung tâm và được phục vụ tận tâm nhất.
+                            </Typography>
+                            <Typography variant="body2" sx={{ mb: 2, opacity: 0.85, lineHeight: 1.6 }}>
+                                ECom cam kết bảo vệ quyền lợi người tiêu dùng, đảm bảo chất lượng sản phẩm, dịch vụ hậu mãi và bảo mật thông tin cá nhân tuyệt đối.
+                            </Typography>
+                            <Box sx={{ mb: 2 }}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#3498db', mb: 1 }}>
+                                    Vì sao nên mua sắm tại ECom?
+                                </Typography>
+                                <ul style={{ margin: 0, paddingLeft: 18, color: 'white', opacity: 0.85, fontSize: '0.98rem' }}>
+                                    <li>Đa dạng sản phẩm, giá cả cạnh tranh, cập nhật xu hướng mới nhất.</li>
+                                    <li>Chính sách đổi trả linh hoạt, bảo vệ quyền lợi khách hàng tối đa.</li>
+                                    <li>Giao hàng nhanh, miễn phí vận chuyển cho đơn hàng từ 500K.</li>
+                                    <li>Hỗ trợ khách hàng 24/7 qua nhiều kênh liên lạc.</li>
+                                    <li>Chương trình tích điểm, ưu đãi thành viên hấp dẫn.</li>
+                                </ul>
+                            </Box>
                             {/* Contact Info */}
-                            <Box sx={{ mb: 3 }}>
+                            <Box sx={{ mb: 3, mt: 2 }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                                     <LocationOn sx={{ fontSize: 20, color: '#3498db' }} />
                                     <Typography variant="body2">
@@ -183,7 +199,6 @@ const EcommerceFooter = () => {
                                     </Typography>
                                 </Box>
                             </Box>
-
                             {/* Social Media */}
                             <Box>
                                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
@@ -304,13 +319,16 @@ const EcommerceFooter = () => {
                 </Grid>
             </Container>
 
-            {/* Bottom Footer */}
+            {/* Bottom Footer + Legal Note */}
             <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.1)', py: 3 }}>
                 <Container maxWidth="lg">
                     <Grid container spacing={2} alignItems="center">
                         <Grid item xs={12} md={6}>
                             <Typography variant="body2" sx={{ opacity: 0.8, textAlign: { xs: 'center', md: 'left' } }}>
-                                © 2025 ECom. Tất cả quyền được bảo lưu.
+                                © 2025 ECom. Tất cả quyền được bảo lưu. <br />
+                                <span style={{ fontSize: '0.92em', opacity: 0.7 }}>
+                                    ECom là đơn vị trung gian kết nối người mua và người bán. Mọi giao dịch đều tuân thủ quy định pháp luật Việt Nam. Vui lòng đọc kỹ các chính sách và điều khoản sử dụng trước khi mua sắm.
+                                </span>
                             </Typography>
                         </Grid>
                         <Grid item xs={12} md={6}>

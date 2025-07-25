@@ -521,6 +521,84 @@ const ModernEcommerceHomePage = () => {
                 </Grid>
             </Container>
 
+            {/* Why Choose ECom Section */}
+            <Container maxWidth="lg" sx={{ my: 10 }}>
+                <Paper elevation={1} sx={{ p: { xs: 3, md: 6 }, borderRadius: 4, background: 'linear-gradient(120deg, #f8fafc 60%, #e0e7ff 100%)', mb: 6 }}>
+                    <Box sx={{ textAlign: 'center', mb: 4 }}>
+                        <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, color: 'primary.main', letterSpacing: 1 }}>
+                            Vì Sao Chọn ECom?
+                        </Typography>
+                        <Typography variant="h6" color="text.secondary">
+                            Chúng tôi mang đến nhiều giá trị vượt trội cho khách hàng và đối tác
+                        </Typography>
+                    </Box>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: 'primary.main' }}>Đa dạng sản phẩm</Typography>
+                            <Typography variant="body2" sx={{ textAlign: 'justify' }}>
+                                Hàng ngàn sản phẩm thuộc nhiều ngành hàng khác nhau, từ điện tử, gia dụng, thời trang đến sức khỏe và làm đẹp. ECom luôn cập nhật xu hướng mới nhất để đáp ứng mọi nhu cầu của bạn.
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: 'primary.main' }}>Dịch vụ khách hàng tận tâm</Typography>
+                            <Typography variant="body2" sx={{ textAlign: 'justify' }}>
+                                Đội ngũ CSKH chuyên nghiệp, hỗ trợ 24/7 qua nhiều kênh: hotline, email, chat trực tuyến. Chúng tôi luôn lắng nghe và giải quyết mọi thắc mắc của khách hàng nhanh chóng, hiệu quả.
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: 'primary.main' }}>Ưu đãi & bảo mật</Typography>
+                            <Typography variant="body2" sx={{ textAlign: 'justify' }}>
+                                Nhiều chương trình khuyến mãi hấp dẫn, tích điểm đổi quà, miễn phí vận chuyển và chính sách bảo mật thông tin cá nhân nghiêm ngặt, giúp bạn yên tâm mua sắm mỗi ngày.
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </Container>
+
+            {/* How It Works Section */}
+            <Container maxWidth="lg" sx={{ my: 10 }}>
+                <Paper elevation={0} sx={{ p: { xs: 3, md: 6 }, borderRadius: 4, background: 'linear-gradient(120deg, #e0e7ff 60%, #f8fafc 100%)', mb: 6 }}>
+                    <Box sx={{ textAlign: 'center', mb: 4 }}>
+                        <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, color: 'primary.main', letterSpacing: 1 }}>
+                            Quy Trình Mua Sắm Đơn Giản
+                        </Typography>
+                        <Typography variant="h6" color="text.secondary">
+                            Chỉ với 4 bước, bạn đã có thể sở hữu sản phẩm yêu thích trên ECom
+                        </Typography>
+                    </Box>
+                    <Grid container spacing={4} justifyContent="center">
+                        <Grid item xs={12} md={3}>
+                            <Box sx={{ textAlign: 'center', mb: 2 }}>
+                                <Typography variant="h4" color="primary" sx={{ fontWeight: 700 }}>1</Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Đăng ký/Đăng nhập</Typography>
+                                <Typography variant="body2">Tạo tài khoản hoặc đăng nhập để bắt đầu mua sắm và nhận ưu đãi thành viên.</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Box sx={{ textAlign: 'center', mb: 2 }}>
+                                <Typography variant="h4" color="primary" sx={{ fontWeight: 700 }}>2</Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Chọn sản phẩm</Typography>
+                                <Typography variant="body2">Duyệt danh mục, tìm kiếm sản phẩm phù hợp và thêm vào giỏ hàng.</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Box sx={{ textAlign: 'center', mb: 2 }}>
+                                <Typography variant="h4" color="primary" sx={{ fontWeight: 700 }}>3</Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Thanh toán an toàn</Typography>
+                                <Typography variant="body2">Chọn phương thức thanh toán phù hợp, nhập thông tin và xác nhận đơn hàng.</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Box sx={{ textAlign: 'center', mb: 2 }}>
+                                <Typography variant="h4" color="primary" sx={{ fontWeight: 700 }}>4</Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Nhận hàng & đánh giá</Typography>
+                                <Typography variant="body2">Đơn hàng sẽ được giao tận nơi. Đừng quên đánh giá sản phẩm để nhận thêm ưu đãi!</Typography>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </Container>
+
             {/* About Us Section - Redesigned and Expanded */}
             <Container maxWidth="lg" sx={{ my: 10 }}>
                 <Paper elevation={3} sx={{ p: { xs: 3, md: 6 }, borderRadius: 4, background: 'linear-gradient(120deg, #f8fafc 60%, #e0e7ff 100%)' }}>
@@ -551,6 +629,49 @@ const ModernEcommerceHomePage = () => {
                             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                 <img src="/src/assets/clinic-home.png" alt="ECom Team" style={{ maxWidth: '100%', borderRadius: 16, boxShadow: '0 8px 32px rgba(100,100,200,0.08)' }} />
                             </Box>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </Container>
+
+            {/* Customer Testimonials Section */}
+            <Container maxWidth="lg" sx={{ my: 10 }}>
+                <Paper elevation={0} sx={{ p: { xs: 3, md: 6 }, borderRadius: 4, background: 'linear-gradient(120deg, #f8fafc 60%, #e0e7ff 100%)', mb: 6 }}>
+                    <Box sx={{ textAlign: 'center', mb: 4 }}>
+                        <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, color: 'primary.main', letterSpacing: 1 }}>
+                            Khách Hàng Nói Gì Về ECom
+                        </Typography>
+                        <Typography variant="h6" color="text.secondary">
+                            Những chia sẻ thực tế từ khách hàng đã trải nghiệm dịch vụ của chúng tôi
+                        </Typography>
+                    </Box>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={4}>
+                            <Paper elevation={2} sx={{ p: 3, borderRadius: 3, height: '100%' }}>
+                                <Typography variant="body1" sx={{ fontStyle: 'italic', mb: 2 }}>
+                                    “Tôi rất hài lòng với dịch vụ giao hàng nhanh và sản phẩm chất lượng của ECom. Đội ngũ CSKH hỗ trợ rất nhiệt tình!”
+                                </Typography>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>Nguyễn Thị Lan</Typography>
+                                <Typography variant="caption" color="text.secondary">Khách hàng Hà Nội</Typography>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Paper elevation={2} sx={{ p: 3, borderRadius: 3, height: '100%' }}>
+                                <Typography variant="body1" sx={{ fontStyle: 'italic', mb: 2 }}>
+                                    “ECom có nhiều chương trình ưu đãi hấp dẫn, sản phẩm đa dạng và giá cả hợp lý. Tôi sẽ tiếp tục ủng hộ!”
+                                </Typography>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>Trần Văn Minh</Typography>
+                                <Typography variant="caption" color="text.secondary">Khách hàng TP.HCM</Typography>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Paper elevation={2} sx={{ p: 3, borderRadius: 3, height: '100%' }}>
+                                <Typography variant="body1" sx={{ fontStyle: 'italic', mb: 2 }}>
+                                    “Tôi đánh giá cao chính sách bảo mật và đổi trả của ECom. Mua sắm online chưa bao giờ dễ dàng và an tâm đến vậy!”
+                                </Typography>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>Lê Hoàng Yến</Typography>
+                                <Typography variant="caption" color="text.secondary">Khách hàng Đà Nẵng</Typography>
+                            </Paper>
                         </Grid>
                     </Grid>
                 </Paper>
