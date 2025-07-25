@@ -251,7 +251,7 @@ const EcommerceHeader = () => {
                         >
                             <ShoppingBag sx={{ fontSize: 32 }} />
                             <Typography
-                                variant="h5"
+                                variant="h1"
                                 sx={{
                                     fontWeight: 700,
                                     display: { xs: 'none', sm: 'block' }
