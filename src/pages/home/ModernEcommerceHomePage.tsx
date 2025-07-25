@@ -521,69 +521,111 @@ const ModernEcommerceHomePage = () => {
                 </Grid>
             </Container>
 
-            {/* About Us Section */}
-            <Container maxWidth="md" sx={{ my: 8 }}>
-                <Box sx={{ textAlign: 'center', mb: 4 }}>
-                    <Typography variant="h3" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>
-                        Về Chúng Tôi
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                        Nền tảng thương mại điện tử hiện đại, kết nối hàng triệu khách hàng với các sản phẩm chất lượng cao và dịch vụ tận tâm.
-                    </Typography>
-                </Box>
-                <Typography variant="body1" sx={{ mb: 2, textAlign: 'justify' }}>
-                    Chào mừng bạn đến với ECom! Chúng tôi tự hào là một trong những nền tảng thương mại điện tử hàng đầu tại Việt Nam, mang đến trải nghiệm mua sắm trực tuyến an toàn, tiện lợi và đa dạng. Với hàng ngàn sản phẩm từ các thương hiệu uy tín, chúng tôi cam kết cung cấp giá cả cạnh tranh, dịch vụ giao hàng nhanh chóng và hỗ trợ khách hàng tận tâm 24/7.
-                </Typography>
-                <Typography variant="body1" sx={{ mb: 2, textAlign: 'justify' }}>
-                    Sứ mệnh của chúng tôi là giúp khách hàng dễ dàng tiếp cận các sản phẩm chất lượng, đồng thời hỗ trợ các nhà bán hàng phát triển kinh doanh bền vững trên nền tảng số. Đội ngũ ECom luôn không ngừng đổi mới để mang lại giá trị tốt nhất cho cộng đồng.
-                </Typography>
-                <Typography variant="body1" sx={{ textAlign: 'justify' }}>
-                    Hãy khám phá ECom ngay hôm nay để tận hưởng những ưu đãi hấp dẫn, dịch vụ chuyên nghiệp và trải nghiệm mua sắm tuyệt vời!
-                </Typography>
+            {/* About Us Section - Redesigned and Expanded */}
+            <Container maxWidth="lg" sx={{ my: 10 }}>
+                <Paper elevation={3} sx={{ p: { xs: 3, md: 6 }, borderRadius: 4, background: 'linear-gradient(120deg, #f8fafc 60%, #e0e7ff 100%)' }}>
+                    <Grid container spacing={4} alignItems="center">
+                        <Grid item xs={12} md={6}>
+                            <Box sx={{ mb: { xs: 3, md: 0 } }}>
+                                <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, color: 'primary.main', letterSpacing: 1 }}>
+                                    Về ECom
+                                </Typography>
+                                <Typography variant="h5" sx={{ color: 'text.secondary', mb: 3 }}>
+                                    Đổi mới trải nghiệm mua sắm trực tuyến tại Việt Nam
+                                </Typography>
+                                <Typography variant="body1" sx={{ mb: 2, textAlign: 'justify', color: 'text.primary' }}>
+                                    ECom là nền tảng thương mại điện tử hiện đại, kết nối hàng triệu khách hàng với các sản phẩm chất lượng cao và dịch vụ tận tâm. Chúng tôi không chỉ cung cấp hàng ngàn sản phẩm đa dạng từ các thương hiệu uy tín mà còn mang đến trải nghiệm mua sắm an toàn, tiện lợi và minh bạch.
+                                </Typography>
+                                <Typography variant="body1" sx={{ mb: 2, textAlign: 'justify', color: 'text.primary' }}>
+                                    <b>Sứ mệnh</b> của ECom là tạo ra một hệ sinh thái thương mại số bền vững, nơi khách hàng được phục vụ tận tâm và các nhà bán hàng được hỗ trợ phát triển lâu dài. Chúng tôi cam kết đổi mới liên tục, ứng dụng công nghệ tiên tiến để nâng cao chất lượng dịch vụ và tối ưu hóa trải nghiệm người dùng.
+                                </Typography>
+                                <Typography variant="body1" sx={{ mb: 2, textAlign: 'justify', color: 'text.primary' }}>
+                                    <b>Giá trị cốt lõi</b> của chúng tôi là: <b>Khách hàng là trung tâm</b>, <b>Chính trực</b>, <b>Đổi mới</b> và <b>Hợp tác phát triển</b>. Đội ngũ ECom luôn lắng nghe, thấu hiểu và đồng hành cùng khách hàng trên hành trình mua sắm trực tuyến.
+                                </Typography>
+                                <Typography variant="body1" sx={{ textAlign: 'justify', color: 'text.primary' }}>
+                                    Hãy khám phá ECom ngay hôm nay để tận hưởng ưu đãi hấp dẫn, dịch vụ chuyên nghiệp và trải nghiệm mua sắm tuyệt vời mỗi ngày!
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                <img src="/src/assets/clinic-home.png" alt="ECom Team" style={{ maxWidth: '100%', borderRadius: 16, boxShadow: '0 8px 32px rgba(100,100,200,0.08)' }} />
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Paper>
             </Container>
 
-            {/* FAQ Section */}
-            <Container maxWidth="md" sx={{ my: 8 }}>
-                <Box sx={{ textAlign: 'center', mb: 4 }}>
-                    <Typography variant="h3" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>
-                        Câu Hỏi Thường Gặp
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                        Giải đáp những thắc mắc phổ biến của khách hàng về ECom
-                    </Typography>
-                </Box>
-                <Box sx={{ mb: 3 }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        1. Làm thế nào để đặt hàng trên ECom?
-                    </Typography>
-                    <Typography variant="body2" sx={{ mb: 2 }}>
-                        Bạn chỉ cần chọn sản phẩm yêu thích, thêm vào giỏ hàng và tiến hành thanh toán theo hướng dẫn. Đội ngũ của chúng tôi sẽ xử lý đơn hàng và giao đến tận nơi cho bạn.
-                    </Typography>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        2. Tôi có thể đổi trả sản phẩm không?
-                    </Typography>
-                    <Typography variant="body2" sx={{ mb: 2 }}>
-                        ECom hỗ trợ đổi trả trong vòng 7 ngày kể từ khi nhận hàng đối với các sản phẩm đáp ứng điều kiện đổi trả. Vui lòng liên hệ bộ phận CSKH để được hướng dẫn chi tiết.
-                    </Typography>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        3. Phương thức thanh toán nào được chấp nhận?
-                    </Typography>
-                    <Typography variant="body2" sx={{ mb: 2 }}>
-                        Chúng tôi chấp nhận thanh toán qua thẻ tín dụng, chuyển khoản ngân hàng, ví điện tử và thanh toán khi nhận hàng (COD).
-                    </Typography>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        4. Thời gian giao hàng dự kiến là bao lâu?
-                    </Typography>
-                    <Typography variant="body2" sx={{ mb: 2 }}>
-                        Thông thường, đơn hàng sẽ được giao trong vòng 1-3 ngày làm việc tại các thành phố lớn và 3-7 ngày tại các khu vực khác.
-                    </Typography>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        5. Làm sao để liên hệ hỗ trợ khách hàng?
-                    </Typography>
-                    <Typography variant="body2">
-                        Bạn có thể liên hệ với chúng tôi qua hotline, email hoặc chat trực tuyến trên website để được hỗ trợ nhanh chóng.
-                    </Typography>
-                </Box>
+            {/* FAQ Section - Redesigned and Expanded */}
+            <Container maxWidth="lg" sx={{ my: 10 }}>
+                <Paper elevation={2} sx={{ p: { xs: 3, md: 6 }, borderRadius: 4, background: 'linear-gradient(120deg, #e0e7ff 60%, #f8fafc 100%)' }}>
+                    <Box sx={{ textAlign: 'center', mb: 4 }}>
+                        <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, color: 'primary.main', letterSpacing: 1 }}>
+                            Câu Hỏi Thường Gặp
+                        </Typography>
+                        <Typography variant="h6" color="text.secondary">
+                            Giải đáp chi tiết các thắc mắc phổ biến về ECom và dịch vụ của chúng tôi
+                        </Typography>
+                    </Box>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={6}>
+                            <Box sx={{ mb: 3 }}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                                    1. Làm thế nào để đặt hàng trên ECom?
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 2 }}>
+                                    Bạn chỉ cần chọn sản phẩm yêu thích, thêm vào giỏ hàng và tiến hành thanh toán theo hướng dẫn. Đội ngũ của chúng tôi sẽ xử lý đơn hàng và giao đến tận nơi cho bạn trên toàn quốc.
+                                </Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                                    2. Tôi có thể đổi trả sản phẩm không?
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 2 }}>
+                                    ECom hỗ trợ đổi trả trong vòng 7 ngày kể từ khi nhận hàng đối với các sản phẩm đáp ứng điều kiện đổi trả. Vui lòng liên hệ bộ phận CSKH để được hướng dẫn chi tiết và hỗ trợ nhanh chóng.
+                                </Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                                    3. Phương thức thanh toán nào được chấp nhận?
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 2 }}>
+                                    Chúng tôi chấp nhận thanh toán qua thẻ tín dụng, chuyển khoản ngân hàng, ví điện tử, QR code và thanh toán khi nhận hàng (COD).
+                                </Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                                    4. Thời gian giao hàng dự kiến là bao lâu?
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 2 }}>
+                                    Thông thường, đơn hàng sẽ được giao trong vòng 1-3 ngày làm việc tại các thành phố lớn và 3-7 ngày tại các khu vực khác. Bạn có thể theo dõi trạng thái đơn hàng trực tiếp trên website.
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Box sx={{ mb: 3 }}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                                    5. Làm sao để liên hệ hỗ trợ khách hàng?
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 2 }}>
+                                    Bạn có thể liên hệ với chúng tôi qua hotline, email hoặc chat trực tuyến trên website để được hỗ trợ nhanh chóng và tận tình 24/7.
+                                </Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                                    6. ECom có chương trình khách hàng thân thiết không?
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 2 }}>
+                                    Có! Khi đăng ký tài khoản và mua sắm thường xuyên, bạn sẽ nhận được điểm thưởng, ưu đãi sinh nhật và nhiều phần quà hấp dẫn khác.
+                                </Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                                    7. Làm sao để trở thành nhà bán hàng trên ECom?
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 2 }}>
+                                    Nếu bạn muốn hợp tác kinh doanh, hãy truy cập mục "Đăng ký bán hàng" trên website để gửi thông tin. Đội ngũ ECom sẽ liên hệ tư vấn và hỗ trợ bạn phát triển gian hàng.
+                                </Typography>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                                    8. ECom bảo vệ thông tin cá nhân của khách hàng như thế nào?
+                                </Typography>
+                                <Typography variant="body2">
+                                    Chúng tôi cam kết bảo mật tuyệt đối thông tin cá nhân của khách hàng theo chính sách bảo mật và tuân thủ quy định pháp luật hiện hành.
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Paper>
             </Container>
 
             {/* Call to Action Section */}
