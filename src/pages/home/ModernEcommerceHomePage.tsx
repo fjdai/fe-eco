@@ -5,13 +5,7 @@ import {
     Typography,
     Box,
     Button,
-    Card,
-    CardContent,
-    CardMedia,
-    Paper,
     Rating,
-    Chip,
-    Skeleton,
     Alert
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -302,224 +296,105 @@ const ModernEcommerceHomePage = () => {
                 </Swiper>
             </Box>
 
-            {/* Features Section */}
-            <Container maxWidth="lg" sx={{ mb: 6 }}>
-                <Grid container spacing={3}>
-                    {features.map((feature, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}>
-                            <Paper
-                                elevation={0}
-                                sx={{
-                                    p: 3,
-                                    textAlign: 'center',
-                                    background: 'linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%)',
-                                    border: '1px solid rgba(0,0,0,0.05)',
-                                    borderRadius: 3,
-                                    transition: 'all 0.3s ease',
-                                    '&:hover': {
-                                        transform: 'translateY(-5px)',
-                                        boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
-                                    }
-                                }}
-                            >
-                                <Box
-                                    sx={{
-                                        color: 'primary.main',
-                                        mb: 2,
-                                        display: 'flex',
-                                        justifyContent: 'center'
-                                    }}
-                                >
-                                    {feature.icon}
-                                </Box>
-                                <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                                    {feature.title}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {feature.description}
-                                </Typography>
-                            </Paper>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Container>
+            {/* Features Section - HTML thuần */}
+            <div className="features-section" style={{ maxWidth: '1200px', margin: '0 auto 48px auto', display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
+                {features.map((feature, index) => (
+                    <div key={index} style={{ flex: '1 1 220px', minWidth: 220, maxWidth: 300, background: 'linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%)', border: '1px solid rgba(0,0,0,0.05)', borderRadius: 16, padding: 24, textAlign: 'center', transition: 'all 0.3s', margin: 0 }}>
+                        <div style={{ color: '#1976d2', marginBottom: 16, display: 'flex', justifyContent: 'center', fontSize: 40 }}>
+                            {feature.icon}
+                        </div>
+                        <h3 style={{ fontWeight: 600, marginBottom: 8, fontSize: 20 }}>{feature.title}</h3>
+                        <p style={{ color: '#666', fontSize: 15, margin: 0 }}>{feature.description}</p>
+                    </div>
+                ))}
+            </div>
 
-            {/* Featured Categories */}
-            <Container maxWidth="lg" sx={{ mb: 6 }}>
-                <Box sx={{ textAlign: 'center', mb: 4 }}>
-                    <Typography variant="h3" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>
-                        Danh mục nổi bật
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                        Khám phá các sản phẩm hot nhất từ những danh mục được yêu thích
-                    </Typography>
-                </Box>
-
-                <Grid container spacing={3}>
+            {/* Featured Categories - HTML thuần */}
+            <div className="featured-categories" style={{ maxWidth: '1200px', margin: '0 auto 48px auto' }}>
+                <div style={{ textAlign: 'center', marginBottom: 32 }}>
+                    <h2 style={{ fontWeight: 700, marginBottom: 8, color: '#222', fontSize: 32 }}>Danh mục nổi bật</h2>
+                    <p style={{ color: '#666', fontSize: 18 }}>Khám phá các sản phẩm hot nhất từ những danh mục được yêu thích</p>
+                </div>
+                <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
                     {loading ? (
                         Array.from({ length: 4 }).map((_, index) => (
-                            <Grid item xs={12} sm={6} md={3} key={index}>
-                                <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 2 }} />
-                                <Skeleton variant="text" height={40} sx={{ mt: 1 }} />
-                            </Grid>
+                            <div key={index} style={{ width: 260, minHeight: 260, borderRadius: 16, background: '#f3f3f3', marginBottom: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                <div style={{ width: '100%', height: 200, background: '#e0e0e0', borderRadius: 12 }} />
+                                <div style={{ width: '60%', height: 32, background: '#e0e0e0', borderRadius: 8, marginTop: 12 }} />
+                            </div>
                         ))
                     ) : (
                         featuredCategories.map((category: any) => (
-                            <Grid item xs={12} sm={6} md={3} key={category.id}>
-                                <Card
-                                    sx={{
-                                        cursor: 'pointer',
-                                        transition: 'all 0.3s ease',
-                                        borderRadius: 3,
-                                        overflow: 'hidden',
-                                        '&zzz:hover': {
-                                            transform: 'translateY(-8px)',
-                                            boxShadow: '0 15px 40px rgba(0,0,0,0.12)'
-                                        }
-                                    }}
-                                    onClick={() => navigate(`/products?category=${category.slug || category.id}`)}
-                                >
-                                    <CardMedia
-                                        component="img"
-                                        height="200"
-                                        image={`${import.meta.env.VITE_BACKEND_URL}/images/${category.image}` || 'https://via.placeholder.com/200'}
-                                        alt={category.name}
-                                        sx={{
-                                            transition: 'transform 0.3s ease',
-                                            '&:hover': {
-                                                transform: 'scale(1.05)'
-                                            }
-                                        }}
-                                    />
-                                    <CardContent sx={{ textAlign: 'center', py: 3 }}>
-                                        <Box sx={{ mb: 2 }}>
-                                            <Storefront sx={{ fontSize: 40, color: 'primary.main' }} />
-                                        </Box>
-                                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                                            {category.name}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
+                            <div key={category.id} style={{ width: 260, borderRadius: 16, background: '#fff', boxShadow: '0 2px 12px rgba(0,0,0,0.04)', cursor: 'pointer', transition: 'all 0.3s', overflow: 'hidden', marginBottom: 16 }}
+                                onClick={() => navigate(`/products?category=${category.slug || category.id}`)}
+                            >
+                                <img
+                                    src={`${import.meta.env.VITE_BACKEND_URL}/images/${category.image}` || 'https://via.placeholder.com/200'}
+                                    alt={category.name}
+                                    style={{ width: '100%', height: 200, objectFit: 'cover', transition: 'transform 0.3s' }}
+                                />
+                                <div style={{ textAlign: 'center', padding: '24px 0' }}>
+                                    <div style={{ marginBottom: 12 }}>
+                                        <Storefront sx={{ fontSize: 40, color: '#1976d2' }} />
+                                    </div>
+                                    <div style={{ fontWeight: 600, fontSize: 18 }}>{category.name}</div>
+                                </div>
+                            </div>
                         ))
                     )}
-                </Grid>
-            </Container>
+                </div>
+            </div>
 
-            {/* Featured Products */}
-            <Container maxWidth="lg" sx={{ mb: 6 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
-                    <Box>
-                        <Typography variant="h3" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
-                            Sản phẩm nổi bật
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary">
-                            Những sản phẩm được khách hàng yêu thích nhất
-                        </Typography>
-                    </Box>
-                    <Button
-                        variant="outlined"
-                        endIcon={<ArrowForward />}
+            {/* Featured Products - HTML thuần */}
+            <div className="featured-products" style={{ maxWidth: '1200px', margin: '0 auto 48px auto' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, flexWrap: 'wrap', gap: 16 }}>
+                    <div>
+                        <h2 style={{ fontWeight: 700, marginBottom: 4, color: '#222', fontSize: 32 }}>Sản phẩm nổi bật</h2>
+                        <p style={{ color: '#666', fontSize: 18, margin: 0 }}>Những sản phẩm được khách hàng yêu thích nhất</p>
+                    </div>
+                    <button
                         onClick={() => navigate('/products')}
-                        sx={{ 
-                            borderRadius: 2,
-                            px: 3,
-                            py: 1,
-                            fontWeight: 600
-                        }}
+                        style={{ borderRadius: 12, padding: '8px 24px', fontWeight: 600, border: '1px solid #1976d2', background: '#fff', color: '#1976d2', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}
                     >
-                        Xem tất cả
-                    </Button>
-                </Box>
-
-                <Grid container spacing={3}>
+                        Xem tất cả <ArrowForward />
+                    </button>
+                </div>
+                <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
                     {loading ? (
                         Array.from({ length: 4 }).map((_, index) => (
-                            <Grid item xs={12} sm={6} md={3} key={index}>
-                                <Skeleton variant="rectangular" height={250} sx={{ borderRadius: 2 }} />
-                                <Skeleton variant="text" height={30} sx={{ mt: 1 }} />
-                                <Skeleton variant="text" height={25} />
-                                <Skeleton variant="text" height={25} />
-                            </Grid>
+                            <div key={index} style={{ width: 260, minHeight: 320, borderRadius: 16, background: '#f3f3f3', marginBottom: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                <div style={{ width: '100%', height: 250, background: '#e0e0e0', borderRadius: 12 }} />
+                                <div style={{ width: '60%', height: 24, background: '#e0e0e0', borderRadius: 8, marginTop: 12 }} />
+                                <div style={{ width: '40%', height: 20, background: '#e0e0e0', borderRadius: 8, marginTop: 8 }} />
+                                <div style={{ width: '40%', height: 20, background: '#e0e0e0', borderRadius: 8, marginTop: 8 }} />
+                            </div>
                         ))
                     ) : (
                         featuredProducts.map((product: any) => (
-                            <Grid item xs={12} sm={6} md={3} key={product.id}>
-                                <Card
-                                    sx={{
-                                        cursor: 'pointer',
-                                        transition: 'all 0.3s ease',
-                                        borderRadius: 3,
-                                        overflow: 'hidden',
-                                        position: 'relative',
-                                        '&:hover': {
-                                            transform: 'translateY(-8px)',
-                                            boxShadow: '0 15px 40px rgba(0,0,0,0.12)'
-                                        }
-                                    }}
-                                    onClick={() => navigate(`/products/${product.slug || product.id}`)}
-                                >
-                                    <Box sx={{ position: 'relative' }}>
-                                        <CardMedia
-                                            component="img"
-                                            height="250"
-                                            image={`${import.meta.env.VITE_BACKEND_URL}/images/${product.image}` || 'https://via.placeholder.com/250'}
-
-                                            alt={product.name}
-                                            sx={{
-                                                transition: 'transform 0.3s ease',
-                                                '&:hover': {
-                                                    transform: 'scale(1.05)'
-                                                }
-                                            }}
-                                        />
-                                        <Chip
-                                            label="Hot"
-                                            color="error"
-                                            size="small"
-                                            sx={{
-                                                position: 'absolute',
-                                                top: 10,
-                                                left: 10,
-                                                fontWeight: 600
-                                            }}
-                                        />
-                                    </Box>
-                                    <CardContent sx={{ p: 2 }}>
-                                        <Typography
-                                            variant="h6"
-                                            sx={{
-                                                fontWeight: 600,
-                                                mb: 1,
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis',
-                                                whiteSpace: 'nowrap'
-                                            }}
-                                        >
-                                            {product.name}
-                                        </Typography>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                                            <Rating value={product.rating} readOnly size="small" />
-                                            <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-                                                ({product.rating})
-                                            </Typography>
-                                        </Box>
-                                        <Typography
-                                            variant="h6"
-                                            sx={{
-                                                color: 'primary.main',
-                                                fontWeight: 700
-                                            }}
-                                        >
-                                            {formatPrice(product.price)}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
+                            <div key={product.id} style={{ width: 260, borderRadius: 16, background: '#fff', boxShadow: '0 2px 12px rgba(0,0,0,0.04)', cursor: 'pointer', transition: 'all 0.3s', overflow: 'hidden', marginBottom: 16, position: 'relative' }}
+                                onClick={() => navigate(`/products/${product.slug || product.id}`)}
+                            >
+                                <div style={{ position: 'relative' }}>
+                                    <img
+                                        src={`${import.meta.env.VITE_BACKEND_URL}/images/${product.image}` || 'https://via.placeholder.com/250'}
+                                        alt={product.name}
+                                        style={{ width: '100%', height: 250, objectFit: 'cover', transition: 'transform 0.3s' }}
+                                    />
+                                    <span style={{ position: 'absolute', top: 10, left: 10, background: '#d32f2f', color: '#fff', fontWeight: 600, borderRadius: 8, padding: '2px 10px', fontSize: 13 }}>Hot</span>
+                                </div>
+                                <div style={{ padding: 16 }}>
+                                    <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 17, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{product.name}</div>
+                                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+                                        <Rating value={product.rating} readOnly size="small" />
+                                        <span style={{ color: '#888', fontSize: 14, marginLeft: 8 }}>({product.rating})</span>
+                                    </div>
+                                    <div style={{ color: '#1976d2', fontWeight: 700, fontSize: 18 }}>{formatPrice(product.price)}</div>
+                                </div>
+                            </div>
                         ))
                     )}
-                </Grid>
-            </Container>
+                </div>
+            </div>
 
             {/* Call to Action Section */}
             <Box
