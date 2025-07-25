@@ -1,371 +1,43 @@
-import {
-    Box,
-    Container,
-    Grid,
-    Typography,
-    Link,
-    IconButton,
-    Button,
-    List,
-    ListItem,
-    ListItemText,
-} from '@mui/material';
-import {
-    Facebook,
-    Twitter,
-    Instagram,
-    YouTube,
-    LinkedIn,
-    ShoppingBag,
-    Email,
-    Phone,
-    LocationOn,
-    Security,
-    LocalShipping,
-    Support,
-    Verified
-} from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 
-const EcommerceFooter = () => {
-    const navigate = useNavigate();
-    const footerSections = [
-        {
-            title: 'Về chúng tôi',
-            links: [
-                { text: 'Giới thiệu', path: '/about' },
-                { text: 'Tuyển dụng', path: '/careers' },
-                { text: 'Tin tức', path: '/news' },
-                { text: 'Đối tác', path: '/partners' }
-            ]
-        },
-        {
-            title: 'Chăm sóc khách hàng',
-            links: [
-                { text: 'Trung tâm hỗ trợ', path: '/support' },
-                { text: 'Hướng dẫn đặt hàng', path: '/order-guide' },
-                { text: 'Chính sách đổi trả', path: '/return-policy' },
-                { text: 'Câu hỏi thường gặp', path: '/faq' }
-            ]
-        },
-        {
-            title: 'Chính sách',
-            links: [
-                { text: 'Điều khoản sử dụng', path: '/terms' },
-                { text: 'Chính sách bảo mật', path: '/privacy' },
-                { text: 'Chính sách thanh toán', path: '/payment-policy' },
-                { text: 'Chính sách vận chuyển', path: '/shipping-policy' }
-            ]
-        },
-        {
-            title: 'Danh mục sản phẩm',
-            links: [
-                { text: 'Điện thoại', path: '/products?category=phones' },
-                { text: 'Laptop', path: '/products?category=laptops' },
-                { text: 'Phụ kiện', path: '/products?category=accessories' },
-                { text: 'Đồng hồ thông minh', path: '/products?category=smartwatches' }
-            ]
-        }
-    ];
 
-    const features = [
-        {
-            icon: <LocalShipping sx={{ fontSize: 24 }} />,
-            title: 'Miễn phí vận chuyển',
-            description: 'Cho đơn hàng từ 500K'
-        },
-        {
-            icon: <Security sx={{ fontSize: 24 }} />,
-            title: 'Thanh toán bảo mật',
-            description: 'Bảo mật 100%'
-        },
-        {
-            icon: <Support sx={{ fontSize: 24 }} />,
-            title: 'Hỗ trợ 24/7',
-            description: 'Tư vấn miễn phí'
-        },
-        {
-            icon: <Verified sx={{ fontSize: 24 }} />,
-            title: 'Chính hãng',
-            description: 'Cam kết 100%'
-        }
-    ];
 
-    return (
-        <Box
-            component="footer"
-            sx={{
-                background: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)',
-                color: 'white',
-                mt: 'auto'
-            }}
-        >
-            {/* Features Section */}
-            <Box sx={{ borderBottom: '1px solid rgba(255,255,255,0.1)', py: 4 }}>
-                <Container maxWidth="lg">
-                    <Grid container spacing={3}>
-                        {features.map((feature, index) => (
-                            <Grid item xs={12} sm={6} md={3} key={index}>
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 2,
-                                        p: 2,
-                                        borderRadius: 2,
-                                        transition: 'all 0.3s ease',
-                                        '&:hover': {
-                                            backgroundColor: 'rgba(255,255,255,0.05)',
-                                            transform: 'translateY(-2px)'
-                                        }
-                                    }}
-                                >
-                                    <Box
-                                        sx={{
-                                            backgroundColor: 'rgba(255,255,255,0.1)',
-                                            borderRadius: '50%',
-                                            p: 1.5,
-                                            color: '#3498db'
-                                        }}
-                                    >
-                                        {feature.icon}
-                                    </Box>
-                                    <Box>
-                                        <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 0.5 }}>
-                                            {feature.title}
-                                        </Typography>
-                                        <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                                            {feature.description}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Container>
-            </Box>
-
-            {/* Main Footer Content */}
-            <Container maxWidth="lg" sx={{ py: 6 }}>
-                <Grid container spacing={4}>
-                    {/* Company Info + More Text */}
-                    <Grid item xs={12} md={4}>
-                        <Box sx={{ mb: 3 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                                <ShoppingBag sx={{ fontSize: 32, color: '#3498db' }} />
-                                <Typography variant="h1" sx={{ fontWeight: 700 }}>
-                                    ECom
-                                </Typography>
-                            </Box>
-                            <Typography variant="body1" sx={{ mb: 2, opacity: 0.95, lineHeight: 1.7 }}>
-                                <b>Sứ mệnh:</b> ECom hướng tới việc trở thành nền tảng thương mại điện tử hàng đầu Việt Nam, giúp mọi người tiếp cận sản phẩm chất lượng với giá tốt nhất, đồng thời hỗ trợ các doanh nghiệp phát triển bền vững trên môi trường số.
-                            </Typography>
-                            <Typography variant="body2" sx={{ mb: 2, opacity: 0.85, lineHeight: 1.6 }}>
-                                <b>Tầm nhìn:</b> Xây dựng cộng đồng mua sắm hiện đại, minh bạch, nơi khách hàng luôn là trung tâm và được phục vụ tận tâm nhất.
-                            </Typography>
-                            <Typography variant="body2" sx={{ mb: 2, opacity: 0.85, lineHeight: 1.6 }}>
-                                ECom cam kết bảo vệ quyền lợi người tiêu dùng, đảm bảo chất lượng sản phẩm, dịch vụ hậu mãi và bảo mật thông tin cá nhân tuyệt đối.
-                            </Typography>
-                            <Box sx={{ mb: 2 }}>
-                                <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#3498db', mb: 1 }}>
-                                    Vì sao nên mua sắm tại ECom?
-                                </Typography>
-                                <ul style={{ margin: 0, paddingLeft: 18, color: 'white', opacity: 0.85, fontSize: '0.98rem' }}>
-                                    <li>Đa dạng sản phẩm, giá cả cạnh tranh, cập nhật xu hướng mới nhất.</li>
-                                    <li>Chính sách đổi trả linh hoạt, bảo vệ quyền lợi khách hàng tối đa.</li>
-                                    <li>Giao hàng nhanh, miễn phí vận chuyển cho đơn hàng từ 500K.</li>
-                                    <li>Hỗ trợ khách hàng 24/7 qua nhiều kênh liên lạc.</li>
-                                    <li>Chương trình tích điểm, ưu đãi thành viên hấp dẫn.</li>
-                                </ul>
-                            </Box>
-                            {/* Contact Info */}
-                            <Box sx={{ mb: 3, mt: 2 }}>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                                    <LocationOn sx={{ fontSize: 20, color: '#3498db' }} />
-                                    <Typography variant="body2">
-                                        123 Đường ABC, Quận 1, TP.HCM
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                                    <Phone sx={{ fontSize: 20, color: '#3498db' }} />
-                                    <Typography variant="body2">
-                                        1900 1234 (Miễn phí)
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                    <Email sx={{ fontSize: 20, color: '#3498db' }} />
-                                    <Typography variant="body2">
-                                        support@ecom.vn
-                                    </Typography>
-                                </Box>
-                            </Box>
-                            {/* Social Media */}
-                            <Box>
-                                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
-                                    Kết nối với chúng tôi
-                                </Typography>
-                                <Box sx={{ display: 'flex', gap: 1 }}>
-                                    {[
-                                        { icon: <Facebook />, color: '#1877f2', label: 'Facebook' },
-                                        { icon: <Instagram />, color: '#e4405f', label: 'Instagram' },
-                                        { icon: <Twitter />, color: '#1da1f2', label: 'Twitter' },
-                                        { icon: <YouTube />, color: '#ff0000', label: 'YouTube' },
-                                        { icon: <LinkedIn />, color: '#0077b5', label: 'LinkedIn' }
-                                    ].map((social, index) => (
-                                        <IconButton
-                                            key={index}
-                                            sx={{
-                                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                                color: 'white',
-                                                transition: 'all 0.3s ease',
-                                                '&:hover': {
-                                                    backgroundColor: social.color,
-                                                    transform: 'translateY(-2px)',
-                                                    boxShadow: `0 4px 12px ${social.color}40`
-                                                }
-                                            }}
-                                            aria-label={social.label}
-                                        >
-                                            {social.icon}
-                                        </IconButton>
-                                    ))}
-                                </Box>
-                            </Box>
-                        </Box>
-                    </Grid>
-
-                    {/* Footer Links */}
-                    {footerSections.map((section, index) => (
-                        <Grid item xs={12} sm={6} md={2} key={index}>
-                            <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: '#3498db' }}>
-                                {section.title}
-                            </Typography>
-                            <List sx={{ p: 0 }}>
-                                {section.links.map((link, linkIndex) => (
-                                    <ListItem 
-                                        key={linkIndex} 
-                                        sx={{ 
-                                            p: 0, 
-                                            mb: 1,
-                                            '&:hover': {
-                                                cursor: 'pointer'
-                                            }
-                                        }}
-                                        onClick={() => navigate(link.path)}
-                                    >
-                                        <ListItemText
-                                            primary={
-                                                <Typography
-                                                    variant="body2"
-                                                    sx={{
-                                                        opacity: 0.8,
-                                                        transition: 'all 0.3s ease',
-                                                        '&:hover': {
-                                                            opacity: 1,
-                                                            color: '#3498db',
-                                                            cursor: 'pointer'
-                                                        }
-                                                    }}
-                                                >
-                                                    {link.text}
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </Grid>
-                    ))}
-
-                    {/* Newsletter Signup */}
-                    <Grid item xs={12} md={4}>
-                        {/* Download App */}
-                        <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: '#3498db' }}>
-                            Tải ứng dụng
-                        </Typography>
-                        <Box sx={{ display: 'flex', gap: 1, flexDirection: { xs: 'column', sm: 'row' } }}>
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    borderColor: 'rgba(255,255,255,0.3)',
-                                    color: 'white',
-                                    textTransform: 'none',
-                                    borderRadius: 2,
-                                    '&:hover': {
-                                        borderColor: '#3498db',
-                                        backgroundColor: 'rgba(52, 152, 219, 0.1)'
-                                    }
-                                }}
-                            >
-                                App Store
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    borderColor: 'rgba(255,255,255,0.3)',
-                                    color: 'white',
-                                    textTransform: 'none',
-                                    borderRadius: 2,
-                                    '&:hover': {
-                                        borderColor: '#3498db',
-                                        backgroundColor: 'rgba(52, 152, 219, 0.1)'
-                                    }
-                                }}
-                            >
-                                Google Play
-                            </Button>
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Container>
-
-            {/* Bottom Footer + Legal Note */}
-            <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.1)', py: 3 }}>
-                <Container maxWidth="lg">
-                    <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={12} md={6}>
-                            <Typography variant="body2" sx={{ opacity: 0.8, textAlign: { xs: 'center', md: 'left' } }}>
-                                © 2025 ECom. Tất cả quyền được bảo lưu. <br />
-                                <span style={{ fontSize: '0.92em', opacity: 0.7 }}>
-                                    ECom là đơn vị trung gian kết nối người mua và người bán. Mọi giao dịch đều tuân thủ quy định pháp luật Việt Nam. Vui lòng đọc kỹ các chính sách và điều khoản sử dụng trước khi mua sắm.
-                                </span>
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Box 
-                                sx={{ 
-                                    display: 'flex', 
-                                    gap: 2, 
-                                    justifyContent: { xs: 'center', md: 'flex-end' },
-                                    flexWrap: 'wrap'
-                                }}
-                            >
-                                {['Điều khoản', 'Bảo mật', 'Cookies', 'Sitemap'].map((item, index) => (
-                                    <Link
-                                        key={index}
-                                        href="#"
-                                        color="inherit"
-                                        sx={{
-                                            textDecoration: 'none',
-                                            opacity: 0.8,
-                                            fontSize: '0.875rem',
-                                            transition: 'opacity 0.3s ease',
-                                            '&:hover': {
-                                                opacity: 1,
-                                                color: '#3498db'
-                                            }
-                                        }}
-                                    >
-                                        {item}
-                                    </Link>
-                                ))}
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </Container>
-            </Box>
-        </Box>
-    );
-};
+const EcommerceFooter = () => (
+  <footer style={{ background: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)', color: 'white', padding: 32 }}>
+    <h1 style={{ color: '#3498db', fontWeight: 700 }}>ECom</h1>
+    <p><b>Sứ mệnh:</b> ECom hướng tới việc trở thành nền tảng thương mại điện tử hàng đầu Việt Nam, giúp mọi người tiếp cận sản phẩm chất lượng với giá tốt nhất, đồng thời hỗ trợ các doanh nghiệp phát triển bền vững trên môi trường số.</p>
+    <p><b>Tầm nhìn:</b> Xây dựng cộng đồng mua sắm hiện đại, minh bạch, nơi khách hàng luôn là trung tâm và được phục vụ tận tâm nhất.</p>
+    <p>ECom cam kết bảo vệ quyền lợi người tiêu dùng, đảm bảo chất lượng sản phẩm, dịch vụ hậu mãi và bảo mật thông tin cá nhân tuyệt đối.</p>
+    <h3 style={{ color: '#3498db', fontWeight: 700 }}>Vì sao nên mua sắm tại ECom?</h3>
+    <ul>
+      <li>Đa dạng sản phẩm, giá cả cạnh tranh, cập nhật xu hướng mới nhất.</li>
+      <li>Chính sách đổi trả linh hoạt, bảo vệ quyền lợi khách hàng tối đa.</li>
+      <li>Giao hàng nhanh, miễn phí vận chuyển cho đơn hàng từ 500K.</li>
+      <li>Hỗ trợ khách hàng 24/7 qua nhiều kênh liên lạc.</li>
+      <li>Chương trình tích điểm, ưu đãi thành viên hấp dẫn.</li>
+    </ul>
+    <div style={{ margin: '24px 0' }}>
+      <div><b>Địa chỉ:</b> 123 Đường ABC, Quận 1, TP.HCM</div>
+      <div><b>Điện thoại:</b> 1900 1234 (Miễn phí)</div>
+      <div><b>Email:</b> support@ecom.vn</div>
+    </div>
+    <div style={{ margin: '24px 0' }}>
+      <b>Kết nối với chúng tôi:</b> Facebook, Instagram, Twitter, YouTube, LinkedIn
+    </div>
+    <div style={{ margin: '24px 0' }}>
+      <b>Về chúng tôi:</b> Giới thiệu | Tuyển dụng | Tin tức | Đối tác<br/>
+      <b>Chăm sóc khách hàng:</b> Trung tâm hỗ trợ | Hướng dẫn đặt hàng | Chính sách đổi trả | Câu hỏi thường gặp<br/>
+      <b>Chính sách:</b> Điều khoản sử dụng | Chính sách bảo mật | Chính sách thanh toán | Chính sách vận chuyển<br/>
+      <b>Danh mục sản phẩm:</b> Điện thoại | Laptop | Phụ kiện | Đồng hồ thông minh
+    </div>
+    <div style={{ margin: '24px 0' }}>
+      <b>Tải ứng dụng:</b> App Store | Google Play
+    </div>
+    <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 16, fontSize: '0.95em', opacity: 0.8 }}>
+      © 2025 ECom. Tất cả quyền được bảo lưu.<br/>
+      ECom là đơn vị trung gian kết nối người mua và người bán. Mọi giao dịch đều tuân thủ quy định pháp luật Việt Nam. Vui lòng đọc kỹ các chính sách và điều khoản sử dụng trước khi mua sắm.<br/>
+      Điều khoản | Bảo mật | Cookies | Sitemap
+    </div>
+  </footer>
+);
 
 export default EcommerceFooter;
