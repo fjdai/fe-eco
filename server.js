@@ -40,6 +40,7 @@ async function createServer() {
           metaTags = `
             <title>${product.meta_title}</title>
             <meta property="og:title" content="${product.meta_title}">
+            <meta charset="UTF-8">
             <meta property="og:description" content="${product.meta_description}">
             <meta property="og:image" content="https://be-ecom-2hfk.onrender.com/images/${product.images[0]}">
             <meta property="og:url" content="https://fe-ecom-2hfk.onrender.com/product/${product.slug}">
