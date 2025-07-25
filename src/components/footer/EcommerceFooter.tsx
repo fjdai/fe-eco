@@ -153,7 +153,7 @@ const EcommerceFooter = () => {
                         <Box sx={{ mb: 3 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                 <ShoppingBag sx={{ fontSize: 32, color: '#3498db' }} />
-                                <Typography variant="h4" sx={{ fontWeight: 700 }}>
+                                <Typography variant="h1" sx={{ fontWeight: 700 }}>
                                     ECom
                                 </Typography>
                             </Box>
