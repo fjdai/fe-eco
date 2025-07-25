@@ -28,8 +28,14 @@ async function createServer() {
         <title>ECommerce Site</title>
         <meta property="og:title" content="ECommerce Site">
         <meta property="og:description" content="Best online store.">
-        <meta property="og:image" content="https://fe-ecom-2hfk.onrender.com/images/default.jpg">
-        <meta property="og:url" content="https://fe-ecom-2hfk.onrender.com${url}">
+        <meta property="og:image" content="https://marketplace.canva.com/EAGQ1aYlOWs/1/0/1600w/canva-blue-colorful-illustrative-e-commerce-online-shop-logo-bHiX_0QpJxE.jpg">
+        <meta property="og:url" content="https://fe-ecom.onrender.com${url}">
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@your_twitter_handle" />
+        <meta name="twitter:title" content="Eco Marketplace – Sản phẩm xanh, thân thiện môi trường" />
+        <meta name="twitter:description" content="Nền tảng TMĐT giúp bạn kết nối với sản phẩm xanh, bền vững, dễ sử dụng và an toàn cho môi trường." />
+        <meta name="twitter:image" content="https://marketplace.canva.com/EAGQ1aYlOWs/1/0/1600w/canva-blue-colorful-illustrative-e-commerce-online-shop-logo-bHiX_0QpJxE.jpgg" />
       `;
 
       if (url.startsWith('/products/')) {
@@ -43,7 +49,7 @@ async function createServer() {
             <meta charset="UTF-8">
             <meta property="og:description" content="${product.meta_description}">
             <meta property="og:image" content="https://be-ecom-2hfk.onrender.com/images/${product.images[0]}">
-            <meta property="og:url" content="https://fe-ecom-2hfk.onrender.com/product/${product.slug}">
+            <meta property="og:url" content="https://fe-ecom.onrender.com/product/${product.slug}">
           `;
         }
       }
