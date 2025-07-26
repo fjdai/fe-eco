@@ -79,6 +79,10 @@
         color: #721c24;
       }
 
+      /* Chat buttons container - chuyển sang bên trái */
+      #chat-buttons-container {
+        position: fixed;
+        left: 24px;
       /* Chat buttons container */
       #chat-buttons-container {
         position: fixed;
@@ -88,7 +92,7 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
-        align-items: flex-end;
+        align-items: flex-start;
       }
 
       /* GetResponse Icon */
@@ -129,7 +133,7 @@
         justify-content: center;
         width: 56px;
         height: 56px;
-background: linear-gradient(135deg, #0078FF 0%, #0063D1 100%);
+        background: linear-gradient(135deg, #0078FF 0%, #0063D1 100%);
         border-radius: 50%;
         box-shadow: 0 4px 12px rgba(0, 120, 255, 0.3);
         transition: all 0.3s ease;
@@ -196,7 +200,7 @@ background: linear-gradient(135deg, #0078FF 0%, #0063D1 100%);
       /* Responsive */
       @media (max-width: 768px) {
         #chat-buttons-container {
-          right: 16px;
+          left: 16px;
           bottom: 16px;
           gap: 12px;
         }
@@ -253,9 +257,7 @@ background: linear-gradient(135deg, #0078FF 0%, #0063D1 100%);
       gtag('config', 'G-D805407T6E');
     </script>
 
-    <!--Start of Fchat.vn-->
-    <script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=686b88f0af409eaba50046cc" async="async"></script>
-    <!--End of Fchat.vn-->
+    
 
     <!-- App head placeholder -->
     <!--app-head-->
@@ -271,7 +273,7 @@ background: linear-gradient(135deg, #0078FF 0%, #0063D1 100%);
         })(window, document, 'script', 'https://an.gr-wcon.com/script/121b6600-afc4-4184-abd0-4fceb7319fdc/ga.js', 'GrTracking');
     </script>
     <!-- End GetResponse Analytics -->
-  </head>
+    <!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=68849fc7a98b50c6600e9957" async="async"></script><!--End of Fchat.vn-->
 
   <body>
     <div class="h-card microformat-metadata" aria-hidden="true">
@@ -306,10 +308,8 @@ background: linear-gradient(135deg, #0078FF 0%, #0063D1 100%);
 
       <!-- Messenger Button -->
       <a href="https://m.me/721672294359124" target="_blank" id="messenger-float-btn" aria-label="Chat với chúng tôi qua Messenger">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="12" fill="white"/>
-<path d="M12 3C7.04 3 3 6.68 3 11.28c0 2.4 1.2 4.56 3.12 5.96-.12.36-.72 2.4-.72 2.4s-.12.36.12.48c.24.12.48 0 .48 0s2.28-1.68 2.88-2.04C9.6 18.2 10.8 18.32 12 18.32c4.96 0 9-3.68 9-8.28S16.96 3 12 3zm.72 11.16l-2.16 2.28c-.24.24-.6.24-.84 0L7.56 14.16c-.24-.24-.12-.6.24-.6h1.2v-1.44c0-.24.24-.48.48-.48h1.44c.24 0 .48.24.48.48v1.44h1.2c.36 0 .48.36.24.6z" fill="#0078FF"/>
-        </svg>
+
+        <img src="/images/messenger.png" alt="Messenger Icon" width="28" height="28" />
       </a>
     </div>
 
@@ -387,7 +387,9 @@ background: linear-gradient(135deg, #0078FF 0%, #0063D1 100%);
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && getResponsePopup.classList.contains('show')) {
           getResponsePopup.classList.remove('show');
-document.body.style.overflow = 'auto';
+
+          document.body.style.overflow = 'auto';
+
         }
       });
 
