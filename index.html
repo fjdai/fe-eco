@@ -78,6 +78,146 @@
         background-color: #f8d7da;
         color: #721c24;
       }
+
+      /* Chat buttons container - chuyển sang bên trái */
+      #chat-buttons-container {
+        position: fixed;
+        left: 24px;
+        bottom: 24px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      /* GetResponse Icon */
+      #getresponse-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      #getresponse-icon:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        background: linear-gradient(135deg, #F7931E 0%, #FF6B35 100%);
+      }
+
+      #getresponse-icon svg {
+        width: 28px;
+        height: 28px;
+        transition: transform 0.2s ease;
+      }
+
+      #getresponse-icon:hover svg {
+        transform: scale(1.1);
+      }
+
+      /* Messenger Icon */
+      #messenger-float-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #0078FF 0%, #0063D1 100%);
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0, 120, 255, 0.3);
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      #messenger-float-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 120, 255, 0.4);
+      }
+
+      #messenger-float-btn img {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+      }
+
+      /* GetResponse Form Popup */
+      #getresponse-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #getresponse-popup.show {
+        display: flex;
+      }
+
+      #getresponse-form-container {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      #close-getresponse {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        z-index: 10001;
+      }
+
+      #close-getresponse:hover {
+        color: #000;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        #chat-buttons-container {
+          left: 16px;
+          bottom: 16px;
+          gap: 12px;
+        }
+
+        #getresponse-icon,
+        #messenger-float-btn {
+          width: 50px;
+          height: 50px;
+        }
+
+        #getresponse-icon svg,
+        #messenger-float-btn img {
+          width: 24px;
+          height: 24px;
+        }
+
+        #getresponse-form-container {
+          width: 95%;
+          padding: 15px;
+        }
+      }
     </style>
 
     <meta charset="UTF-8" />
@@ -95,6 +235,7 @@
       "inLanguage": "vi"
     }
     </script>
+
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -109,13 +250,10 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-D805407T6E');
     </script>
 
-    <!--Start of Fchat.vn-->
-    <script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=686b88f0af409eaba50046cc" async="async"></script>
-    <!--End of Fchat.vn-->
+    
 
     <!-- App head placeholder -->
     <!--app-head-->
@@ -125,16 +263,13 @@
 
     <!-- GetResponse Analytics -->
     <script type="text/javascript">
-        
     (function(m, o, n, t, e, r, _){
             m['__GetResponseAnalyticsObject'] = e;m[e] = m[e] || function() {(m[e].q = m[e].q || []).push(arguments)};
             r = o.createElement(n);_ = o.getElementsByTagName(n)[0];r.async = 1;r.src = t;r.setAttribute('crossorigin', 'use-credentials');_.parentNode .insertBefore(r, _);
         })(window, document, 'script', 'https://an.gr-wcon.com/script/121b6600-afc4-4184-abd0-4fceb7319fdc/ga.js', 'GrTracking');
-
-
     </script>
     <!-- End GetResponse Analytics -->
-  </head>
+    <!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=68849fc7a98b50c6600e9957" async="async"></script><!--End of Fchat.vn-->
 
   <body>
     <div class="h-card microformat-metadata" aria-hidden="true">
@@ -157,6 +292,31 @@
     </style>
 
     <div id="root"><!--app-html--></div>
+
+    <!-- Chat & Action Buttons Container - Chuyển sang bên trái -->
+    <div id="chat-buttons-container">
+      <!-- GetResponse Icon -->
+      <div id="getresponse-icon" aria-label="Đăng ký nhận tin">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="white"/>
+        </svg>
+      </div>
+
+      <!-- Messenger Button -->
+      <a href="https://m.me/721672294359124" target="_blank" id="messenger-float-btn" aria-label="Chat với chúng tôi qua Messenger">
+        <img src="/images/messenger.png" alt="Messenger Icon" width="28" height="28" />
+      </a>
+    </div>
+
+    <!-- GetResponse Form Popup -->
+    <div id="getresponse-popup">
+      <div id="getresponse-form-container">
+        <button id="close-getresponse">&times;</button>
+        <div style="margin-top: 20px;">
+          <getresponse-form form-id="c4d325bc-1999-45c3-8c13-b4b16df01d07" e="1"></getresponse-form>
+        </div>
+      </div>
+    </div>
 
     <!-- Messenger & Pixel -->
     <div id="fb-root"></div>
@@ -183,37 +343,61 @@
       page_id="YOUR_FACEBOOK_PAGE_ID"
     ></div>
 
+    <!-- GetResponse Form Control Script -->
+    <script>
+      // GetResponse form popup controls
+      const getResponseIcon = document.getElementById('getresponse-icon');
+      const getResponsePopup = document.getElementById('getresponse-popup');
+      const closeGetResponse = document.getElementById('close-getresponse');
 
-    <!-- Messenger Floating Button -->
-    <a href="https://m.me/721672294359124" target="_blank" id="messenger-float-btn" aria-label="Chat với chúng tôi qua Messenger">
-      <img src="public/images/messenger.png" alt="Mesenger Icon"/>
-    </a>
-    <style>
-      #messenger-float-btn {
-        position: fixed;
-        right: 88px;
-        bottom: 16px;
-        z-index: 9999;
-        background: none;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        border-radius: 50%;
-        padding: 0;
-        transition: box-shadow 0.2s;
-      }
-      #messenger-float-btn:hover {
-        box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-      }
-      #messenger-float-btn img {
-        display: block;
-        width: 56px;
-        height: 56px;
-      }
-    </style>
+      // Show popup when icon is clicked
+      getResponseIcon.addEventListener('click', () => {
+        getResponsePopup.classList.add('show');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        
+        // Track with Google Analytics
+        if (window.gtag) {
+          window.gtag('event', 'getresponse_popup_open', {
+            event_category: 'engagement',
+            event_label: 'newsletter_signup'
+          });
+        }
+      });
+
+      // Hide popup when close button is clicked
+      closeGetResponse.addEventListener('click', () => {
+        getResponsePopup.classList.remove('show');
+        document.body.style.overflow = 'auto'; // Restore scrolling
+      });
+
+      // Hide popup when clicking outside the form
+      getResponsePopup.addEventListener('click', (e) => {
+        if (e.target === getResponsePopup) {
+          getResponsePopup.classList.remove('show');
+          document.body.style.overflow = 'auto';
+        }
+      });
+
+      // Hide popup with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && getResponsePopup.classList.contains('show')) {
+          getResponsePopup.classList.remove('show');
+          document.body.style.overflow = 'auto';
+        }
+      });
+
+      // Auto-show popup after 30 seconds (optional)
+      setTimeout(() => {
+        const hasSeenPopup = localStorage.getItem('getresponse-seen');
+        if (!hasSeenPopup) {
+          getResponsePopup.classList.add('show');
+          document.body.style.overflow = 'hidden';
+          localStorage.setItem('getresponse-seen', 'true');
+        }
+      }, 30000);
+    </script>
+
     <!-- Vite client entry -->
     <script type="module" src="/src/entry-client.tsx"></script>
-
-    <getresponse-form form-id="c4d325bc-1999-45c3-8c13-b4b16df01d07" e="1"></getresponse-form>
   </body>
 </html>
