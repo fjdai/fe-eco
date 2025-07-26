@@ -83,10 +83,6 @@
       #chat-buttons-container {
         position: fixed;
         left: 24px;
-      /* Chat buttons container */
-      #chat-buttons-container {
-        position: fixed;
-        right: 24px;
         bottom: 24px;
         z-index: 9999;
         display: flex;
@@ -243,7 +239,7 @@
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
+    <link
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
@@ -273,8 +269,9 @@
         })(window, document, 'script', 'https://an.gr-wcon.com/script/121b6600-afc4-4184-abd0-4fceb7319fdc/ga.js', 'GrTracking');
     </script>
     <!-- End GetResponse Analytics -->
-    <!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=68849fc7a98b50c6600e9957" async="async"></script><!--End of Fchat.vn-->
+    <!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=6884b6c0e188c9c886018a14" async="async"></script><!--End of Fchat.vn-->
   </head>
+
   <body>
     <div class="h-card microformat-metadata" aria-hidden="true">
       <span class="p-name">Eco Marketplace</span>
@@ -297,7 +294,7 @@
 
     <div id="root"><!--app-html--></div>
 
-    <!-- Chat & Action Buttons Container -->
+    <!-- Chat & Action Buttons Container - Chuyển sang bên trái -->
     <div id="chat-buttons-container">
       <!-- GetResponse Icon -->
       <div id="getresponse-icon" aria-label="Đăng ký nhận tin">
@@ -308,8 +305,7 @@
 
       <!-- Messenger Button -->
       <a href="https://m.me/721672294359124" target="_blank" id="messenger-float-btn" aria-label="Chat với chúng tôi qua Messenger">
-
-        <img src="/images/messenger.png" alt="Messenger Icon" width="28" height="28" />
+        <img src="/images/messenger.png" alt="Messenger Icon" />
       </a>
     </div>
 
@@ -387,9 +383,7 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && getResponsePopup.classList.contains('show')) {
           getResponsePopup.classList.remove('show');
-
           document.body.style.overflow = 'auto';
-
         }
       });
 
