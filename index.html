@@ -83,6 +83,10 @@
       #chat-buttons-container {
         position: fixed;
         left: 24px;
+      /* Chat buttons container */
+      #chat-buttons-container {
+        position: fixed;
+        right: 24px;
         bottom: 24px;
         z-index: 9999;
         display: flex;
@@ -239,7 +243,7 @@
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
+<link
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
@@ -293,7 +297,7 @@
 
     <div id="root"><!--app-html--></div>
 
-    <!-- Chat & Action Buttons Container - Chuyển sang bên trái -->
+    <!-- Chat & Action Buttons Container -->
     <div id="chat-buttons-container">
       <!-- GetResponse Icon -->
       <div id="getresponse-icon" aria-label="Đăng ký nhận tin">
@@ -304,6 +308,7 @@
 
       <!-- Messenger Button -->
       <a href="https://m.me/721672294359124" target="_blank" id="messenger-float-btn" aria-label="Chat với chúng tôi qua Messenger">
+
         <img src="/images/messenger.png" alt="Messenger Icon" width="28" height="28" />
       </a>
     </div>
@@ -382,7 +387,9 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && getResponsePopup.classList.contains('show')) {
           getResponsePopup.classList.remove('show');
+
           document.body.style.overflow = 'auto';
+
         }
       });
 
