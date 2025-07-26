@@ -17,7 +17,6 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import {
-    ShoppingBag,
     ArrowForward,
     LocalShipping,
     Security,
