@@ -21,7 +21,11 @@ import {
   DialogContent,
   DialogActions,
   FormControlLabel,
-  Checkbox
+  Checkbox,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material';
 import {
   Email,
@@ -62,6 +66,13 @@ const EmailMarketingAdmin: React.FC = () => {
 
   // Export dialog
   const [exportDialog, setExportDialog] = useState(false);
+  const [exportFilters, setExportFilters] = useState({
+    roleId: '',
+    newsletterSubscribed: '',
+    gender: '',
+    dateFrom: '',
+    dateTo: ''
+  });
   
 
   useEffect(() => {
@@ -106,13 +117,27 @@ const EmailMarketingAdmin: React.FC = () => {
     }
   };
 
-const handleExportEmails = async () => {
+const handleExportEmails = async (useFilters: boolean = false) => {
   try {
-    const response = await fetch('https://be-ecom-2hfk.onrender.com/api/v1/admin/users/export-email', {
+    let url = 'https://be-ecom-2hfk.onrender.com/api/v1/admin/users/export-email';
+    
+    if (useFilters) {
+      const queryParams = new URLSearchParams();
+      if (exportFilters.roleId) queryParams.append('roleId', exportFilters.roleId);
+      if (exportFilters.newsletterSubscribed) queryParams.append('newsletterSubscribed', exportFilters.newsletterSubscribed);
+      if (exportFilters.gender) queryParams.append('gender', exportFilters.gender);
+      if (exportFilters.dateFrom) queryParams.append('dateFrom', exportFilters.dateFrom);
+      if (exportFilters.dateTo) queryParams.append('dateTo', exportFilters.dateTo);
+      
+      url = `https://be-ecom-2hfk.onrender.com/api/v1/admin/users/export-email-filtered?${queryParams.toString()}`;
+    }
+
+    const response = await fetch(url, {
       headers: {
         'Authorization': typeof window !== 'undefined' && localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
       }
     });
+    
     if (response.ok) {
       const text = await response.text();
       // Thêm BOM để Excel nhận diện UTF-8
@@ -121,7 +146,7 @@ const handleExportEmails = async () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `email_list_${Date.now()}.csv`;
+      a.download = `user_list_${useFilters ? 'filtered_' : ''}${Date.now()}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -236,7 +261,7 @@ const handleExportEmails = async () => {
             startIcon={<Download />}
             onClick={() => setExportDialog(true)}
           >
-            Export Email List
+            Export User Data
           </Button>
         </Grid>
         <Grid item>
@@ -342,21 +367,113 @@ const handleExportEmails = async () => {
       </Dialog>
 
       {/* Export Dialog */}
-      <Dialog open={exportDialog} onClose={() => setExportDialog(false)}>
-        <DialogTitle>Export Email List</DialogTitle>
+      <Dialog open={exportDialog} onClose={() => setExportDialog(false)} maxWidth="md" fullWidth>
+        <DialogTitle>Export User Information</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} sx={{ mt: 1 }}>
             <Grid item xs={12}>
               <Typography variant="body2" color="text.secondary" paragraph>
-                Export email addresses.
+                Export user data with detailed information including email, phone, address, orders, and more.
               </Typography>
+            </Grid>
+            
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>User Role</InputLabel>
+                <Select
+                  value={exportFilters.roleId}
+                  label="User Role"
+                  onChange={(e) => setExportFilters(prev => ({ ...prev, roleId: e.target.value }))}
+                >
+                  <MenuItem value="">All Roles</MenuItem>
+                  <MenuItem value="1">Admin</MenuItem>
+                  <MenuItem value="2">User</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Newsletter Subscription</InputLabel>
+                <Select
+                  value={exportFilters.newsletterSubscribed}
+                  label="Newsletter Subscription"
+                  onChange={(e) => setExportFilters(prev => ({ ...prev, newsletterSubscribed: e.target.value }))}
+                >
+                  <MenuItem value="">All Users</MenuItem>
+                  <MenuItem value="true">Subscribed</MenuItem>
+                  <MenuItem value="false">Not Subscribed</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Gender</InputLabel>
+                <Select
+                  value={exportFilters.gender}
+                  label="Gender"
+                  onChange={(e) => setExportFilters(prev => ({ ...prev, gender: e.target.value }))}
+                >
+                  <MenuItem value="">All Genders</MenuItem>
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Date From"
+                type="date"
+                value={exportFilters.dateFrom}
+                onChange={(e) => setExportFilters(prev => ({ ...prev, dateFrom: e.target.value }))}
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Date To"
+                type="date"
+                value={exportFilters.dateTo}
+                onChange={(e) => setExportFilters(prev => ({ ...prev, dateTo: e.target.value }))}
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
+                <Typography variant="body2" fontWeight="bold" gutterBottom>
+                  Export will include:
+                </Typography>
+                <Typography variant="body2" component="ul" sx={{ m: 0, pl: 2 }}>
+                  <li>User ID, Name, Email, Phone, Address</li>
+                  <li>Gender, Role, Newsletter subscription status</li>
+                  <li>Total orders count and spending amount</li>
+                  <li>Last order date, Registration date</li>
+                </Typography>
+              </Box>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setExportDialog(false)}>Cancel</Button>
-          <Button onClick={handleExportEmails} variant="contained">
-            Export
+          <Button 
+            onClick={() => handleExportEmails(false)} 
+            variant="outlined"
+            sx={{ mr: 1 }}
+          >
+            Export All Users
+          </Button>
+          <Button 
+            onClick={() => handleExportEmails(true)} 
+            variant="contained"
+          >
+            Export with Filters
           </Button>
         </DialogActions>
       </Dialog>
